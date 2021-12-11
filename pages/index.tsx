@@ -29,13 +29,7 @@ export default function Home() {
         </Box>
 
         {/* Title */}
-        <Heading
-          maxWidth="80vw"
-          size="4xl"
-          my="4"
-          textAlign="center"
-          color="gray.700"
-        >
+        <Heading size="4xl" my="4" textAlign="center" color="gray.700">
           Janken Pon !
         </Heading>
 
