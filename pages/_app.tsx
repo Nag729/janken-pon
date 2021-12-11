@@ -1,8 +1,33 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { ChakraProvider } from "@chakra-ui/react";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import Router from "next/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import * as React from "react";
+import TheFooter from "../components/projects/TheFooter";
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+// events for NProgress
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
+
+function App({ Component, pageProps }: AppProps) {
+  return (
+    <ChakraProvider>
+      {/* Head */}
+      <Head>
+        <title>じゃんけんぽん</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      {/* main component */}
+      <Component {...pageProps} />
+
+      {/* TheFooter */}
+      <TheFooter />
+    </ChakraProvider>
+  );
 }
-
-export default MyApp
+export default App;
