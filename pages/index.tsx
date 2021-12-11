@@ -1,76 +1,88 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Button, Heading } from "@chakra-ui/react";
-import React, { CSSProperties } from "react";
+import { Box, Button, Heading, Input } from "@chakra-ui/react";
+import React, { useState } from "react";
+import RpsEmoji from "../components/uiParts/RpsEmoji";
 import styles from "../styles/Home.module.css";
 
-/**
- * Styles
- */
-const subTitleStyles: CSSProperties = {
-  letterSpacing: "0.8rem",
-};
-
-/**
- * Functions
- */
-const createNewRoom = () => {
-  console.log(`createNewRoom`);
-};
-
 export default function Home() {
+  const [name, setName] = useState("");
+  const hasName: boolean = !!name.length;
+
+  /**
+   * Functions
+   */
+  const createNewRoom = () => {
+    console.log(`createNewRoom`);
+  };
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        {/* Nextjs logo */}
-        <Box mb="2">
-          {/* TODO: */}
-          {/* <RpsEmoji /> */}
+        {/* Emoji */}
+        <Box my="2">
+          <RpsEmoji fontSize="120px" />
         </Box>
 
         {/* title */}
         <Heading
           maxWidth="80vw"
           size="4xl"
-          my="5"
+          my="4"
           textAlign="center"
-          color="gray.600"
+          color="gray.700"
         >
           Janken Pon !
         </Heading>
 
-        <Box>
+        <Box my="4">
           <Heading
             size="lg"
-            my="5"
+            my="4"
             textAlign="center"
             color="blue.400"
-            style={subTitleStyles}
+            letterSpacing="0.6rem"
           >
-            {/* <RpsEmoji /> */}
             オンラインで
           </Heading>
           <Heading
             size="lg"
-            my="5"
+            my="4"
             textAlign="center"
             color="blue.400"
-            style={subTitleStyles}
+            letterSpacing="0.6rem"
           >
             じゃんけんをしよう
           </Heading>
         </Box>
 
-        {/* link button */}
-        <Box my="3">
-          {/* Link */}
-          <Box my="6">
+        {/* Create Room Form */}
+        <Box
+          w="100vw"
+          my="4"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Box w="320px" my="4">
+            <Input
+              colorScheme="blue"
+              placeholder="ニックネームを入力"
+              size="lg"
+              textAlign="center"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </Box>
+          <Box w="240px" my="4">
             <Button
               rightIcon={<ArrowForwardIcon />}
               colorScheme="blue"
               size="lg"
+              width="100%"
+              disabled={!hasName}
               onClick={createNewRoom}
             >
-              部屋を立てる
+              はじめる
             </Button>
           </Box>
         </Box>
