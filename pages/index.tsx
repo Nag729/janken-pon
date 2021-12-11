@@ -3,8 +3,12 @@ import { Box, Button, Heading, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import RpsEmoji from "../components/uiParts/RpsEmoji";
 import styles from "../styles/Home.module.css";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const hasName: boolean = !!name.length;
 
@@ -12,18 +16,19 @@ export default function Home() {
    * Functions
    */
   const createNewRoom = () => {
-    console.log(`createNewRoom`);
+    const uuid: string = uuidv4();
+    router.push(`/room/${uuid}?name=${name}`);
   };
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <main className={styles.main}>
         {/* Emoji */}
         <Box my="2">
           <RpsEmoji fontSize="120px" />
         </Box>
 
-        {/* title */}
+        {/* Title */}
         <Heading
           maxWidth="80vw"
           size="4xl"
@@ -34,6 +39,7 @@ export default function Home() {
           Janken Pon !
         </Heading>
 
+        {/* Sub Title */}
         <Box my="4">
           <Heading
             size="lg"
@@ -63,7 +69,7 @@ export default function Home() {
           flexDirection="column"
           alignItems="center"
         >
-          <Box w="320px" my="4">
+          <Box w="320px" my="2">
             <Input
               colorScheme="blue"
               placeholder="ニックネームを入力"
@@ -73,7 +79,7 @@ export default function Home() {
               onChange={(event) => setName(event.target.value)}
             />
           </Box>
-          <Box w="240px" my="4">
+          <Box w="160px" mt="6">
             <Button
               rightIcon={<ArrowForwardIcon />}
               colorScheme="blue"
@@ -87,6 +93,6 @@ export default function Home() {
           </Box>
         </Box>
       </main>
-    </div>
+    </section>
   );
 }
