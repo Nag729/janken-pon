@@ -29,7 +29,7 @@ export default function Home() {
     localStorage.setItem("name", name);
 
     const uuid: string = uuidv4();
-    router.push(`/room/${uuid}`);
+    router.push(`/waiting-room/${uuid}`);
   };
 
   return (
