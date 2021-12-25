@@ -1,23 +1,35 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, Heading, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
-import RpsEmoji from "../components/uiParts/RpsEmoji";
-import styles from "../styles/Home.module.css";
-import { v4 as uuidv4 } from "uuid";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import { useName } from "../hooks/useName";
+import styles from "../styles/Home.module.css";
+
+/**
+ * NOTE: Suppress Warning:
+ * https://zenn.dev/terrierscript/articles/2020-11-03-next-js-random-value
+ */
+const RpsEmoji = dynamic(() => import("../components/uiParts/RpsEmoji"), {
+  ssr: false,
+});
 
 export default function Home() {
   const router = useRouter();
 
-  const [name, setName] = useState("");
+  const { name, setName } = useName();
   const hasName: boolean = !!name.length;
 
   /**
    * Functions
    */
   const createNewRoom = () => {
+    // NOTE: save name to local-storage
+    localStorage.setItem("name", name);
+
     const uuid: string = uuidv4();
-    router.push(`/room/${uuid}?name=${name}`);
+    router.push(`/room/${uuid}`);
   };
 
   return (
