@@ -94,7 +94,7 @@ export default function Home() {
               disabled={!hasName}
               onClick={createNewRoom}
             >
-              はじめる
+              部屋をつくる
             </Button>
           </Box>
         </Box>

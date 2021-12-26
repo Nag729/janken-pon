@@ -1,10 +1,18 @@
-import { CopyIcon } from "@chakra-ui/icons";
-import { Box, Heading, IconButton, Input, useToast } from "@chakra-ui/react";
+import { ArrowForwardIcon, CopyIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Heading,
+  IconButton,
+  Input,
+  useToast,
+} from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { copyToClipboard } from "../../helpers/copy-to-clipboard";
 import { useName } from "../../hooks/useName";
+import { useSocket } from "../../hooks/useSocket";
 import styles from "../../styles/Home.module.css";
 
 const ParticipantBadge = dynamic(
@@ -19,19 +27,49 @@ const Room = () => {
   const toast = useToast();
 
   const { roomId } = router.query;
-  const { name } = useName();
-
   const url = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}`;
+
+  const { name, loading } = useName();
+  const [nameList, setNameList] = React.useState<string[]>([]);
+
+  const socket = useSocket(
+    process.env.NEXT_PUBLIC_SOCKET_URL || `http://localhost:3001`
+  );
+
+  useEffect(() => {
+    if (loading || !socket) return;
+
+    socket.emit(`join`, name);
+  }, [loading, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    // TODO: connect 不要かも
+    socket.on(`connect`, () => {
+      console.log(`SOCKET CONNECTED! 🎉`);
+    });
+
+    socket.on(`update-name-list`, (nameList: string[]) => {
+      setNameList([...nameList]);
+    });
+  }, [socket]);
 
   const copyUrl = async () => {
     await copyToClipboard(url);
 
     toast({
-      title: "URL is copied.",
-      status: "success",
+      title: `URL is copied.`,
+      status: `success`,
       duration: 1500,
       isClosable: true,
     });
+  };
+
+  const startRps = () => {
+    alert(`じゃんけんを始める`);
+
+    // TODO:
   };
 
   return (
@@ -72,10 +110,23 @@ const Room = () => {
 
           {/* Participants Badge */}
           <Box my="4" display="flex" gap="4" alignItems="center">
-            {/* TODO: 他の参加者のバッジを表示する */}
-            <ParticipantBadge name={name} />
+            {nameList.map((name) => (
+              <ParticipantBadge key={name} name={name} />
+            ))}
+          </Box>
 
-            {/* TODO: 「じゃんけんをはじめる」ボタン */}
+          {/* Start Button */}
+          <Box w="320px" mt="6">
+            <Button
+              rightIcon={<ArrowForwardIcon />}
+              colorScheme="blue"
+              size="lg"
+              width="100%"
+              disabled={nameList.length <= 1}
+              onClick={startRps}
+            >
+              このメンバーではじめる
+            </Button>
           </Box>
         </Box>
       </main>
