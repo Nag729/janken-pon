@@ -39,16 +39,18 @@ const Room = () => {
   useEffect(() => {
     if (loading || !socket) return;
 
+    // NOTE: Join to the room.
+    // TODO: uuid を渡して room ごとに data を保持する
+    // TODO: 部屋を立てたホストかリンクからの参加者かをどう判断するか？ -> Router の遷移元を見るのがいいかも
     socket.emit(`join`, name);
   }, [loading, socket]);
 
   useEffect(() => {
     if (!socket) return;
 
-    // TODO: connect 不要かも
-    socket.on(`connect`, () => {
-      console.log(`SOCKET CONNECTED! 🎉`);
-    });
+    // socket.on(`connect`, () => {
+    //   console.log(`SOCKET CONNECTED! 🎉`);
+    // });
 
     socket.on(`update-name-list`, (nameList: string[]) => {
       setNameList([...nameList]);
