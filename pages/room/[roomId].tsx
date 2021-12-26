@@ -1,17 +1,37 @@
-import { Box, Button, Heading, Input, Text } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
+import { Box, Heading, IconButton, Input, useToast } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import React from "react";
+import { copyToClipboard } from "../../helpers/copy-to-clipboard";
+import { useName } from "../../hooks/useName";
 import styles from "../../styles/Home.module.css";
+
+const ParticipantBadge = dynamic(
+  () => import("../../components/uiParts/ParticipantBadge"),
+  {
+    ssr: false,
+  }
+);
 
 const Room = () => {
   const router = useRouter();
-  // TODO: name を URL に含めないように修正
-  const { roomId, name } = router.query;
+  const toast = useToast();
+
+  const { roomId } = router.query;
+  const { name } = useName();
 
   const url = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}`;
 
-  const copyUrl = () => {
-    // TODO: URL をコピー
-    // TODO: toast を表示する
+  const copyUrl = async () => {
+    await copyToClipboard(url);
+
+    toast({
+      title: "URL is copied.",
+      status: "success",
+      duration: 1500,
+      isClosable: true,
+    });
   };
 
   return (
@@ -34,9 +54,13 @@ const Room = () => {
               readOnly
               textAlign="center"
             />
-            <Button w="80px" colorScheme="blue" size="lg" onClick={copyUrl}>
-              コピー
-            </Button>
+            <IconButton
+              colorScheme="blue"
+              size="lg"
+              aria-label="Copy"
+              icon={<CopyIcon />}
+              onClick={copyUrl}
+            ></IconButton>
           </Box>
         </Box>
 
@@ -48,9 +72,10 @@ const Room = () => {
 
           {/* Participants Badge */}
           <Box my="4" display="flex" gap="4" alignItems="center">
-            {/* TODO: 参加者バッジ */}
+            {/* TODO: 他の参加者のバッジを表示する */}
+            <ParticipantBadge name={name} />
 
-            {/* TODO: 「じゃんけんをはじめる」 */}
+            {/* TODO: 「じゃんけんをはじめる」ボタン */}
           </Box>
         </Box>
       </main>
