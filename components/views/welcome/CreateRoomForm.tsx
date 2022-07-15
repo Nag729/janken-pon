@@ -2,15 +2,15 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Input, Button } from "@chakra-ui/react";
 
 type CreateRoomFormProps = {
-  name: string;
-  setName: (name: string) => void;
+  userName: string;
+  setUserName: (userName: string) => void;
   createNewRoom: () => void;
 };
 
 export default function CreateRoomForm(
   props: CreateRoomFormProps
 ): JSX.Element {
-  const hasName: boolean = !!props.name.length;
+  const hasUserName: boolean = !!props.userName.length;
 
   return (
     <Box
@@ -26,8 +26,8 @@ export default function CreateRoomForm(
           placeholder="ニックネームを入力"
           size="lg"
           textAlign="center"
-          value={props.name}
-          onChange={(event) => props.setName(event.target.value)}
+          value={props.userName}
+          onChange={(event) => props.setUserName(event.target.value)}
         />
       </Box>
       <Box w="160px" mt="6">
@@ -36,7 +36,7 @@ export default function CreateRoomForm(
           colorScheme="blue"
           size="lg"
           width="100%"
-          disabled={!hasName}
+          disabled={!hasUserName}
           onClick={props.createNewRoom}
         >
           部屋をつくる

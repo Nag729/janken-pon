@@ -20,11 +20,11 @@ const randomColor = (): Color => {
 };
 
 type ParticipantBadgeProps = {
-  name: string;
+  userName: string;
 };
 
 export default function ParticipantBadge({
-  name,
+  userName,
 }: ParticipantBadgeProps): JSX.Element {
   return (
     <Tag
@@ -38,7 +38,7 @@ export default function ParticipantBadge({
       borderRadius="4rem"
     >
       <TagLeftIcon w={5} h={5} as={SunIcon} />
-      <TagLabel>{name}</TagLabel>
+      <TagLabel>{userName}</TagLabel>
     </Tag>
   );
 }

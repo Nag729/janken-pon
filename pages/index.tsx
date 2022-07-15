@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import CreateRoomForm from "../components/views/welcome/CreateRoomForm";
 import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
-import { useName } from "../hooks/useName";
+import { useUserName } from "../hooks/useName";
 import styles from "../styles/Home.module.css";
 
 /**
@@ -18,13 +18,16 @@ const RpsEmoji = dynamic(() => import("../components/uiParts/RpsEmoji"), {
 
 export default function Home() {
   const router = useRouter();
-  const { name, setName } = useName();
+  const { userName, setUserName } = useUserName();
 
   /**
    * Functions
    */
   const createNewRoom = () => {
-    localStorage.setItem("name", name);
+    localStorage.setItem(
+      `${process.env.NEXT_PUBLIC_LOCAL_STORAGE_PREFIX}-name`,
+      userName
+    );
     router.push(`/room/${uuidv4()}/waiting`);
   };
 
@@ -44,8 +47,8 @@ export default function Home() {
 
         {/* Create Room Form */}
         <CreateRoomForm
-          name={name}
-          setName={setName}
+          userName={userName}
+          setUserName={setUserName}
           createNewRoom={createNewRoom}
         />
       </main>

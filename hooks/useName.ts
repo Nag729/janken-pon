@@ -3,24 +3,26 @@ import { useEffect, useState } from "react";
 /**
  * c.f. https://t-yng.jp/post/nextjs-storage
  */
-const readName = (): string => {
-  const name = localStorage.getItem("name");
-  return name ?? "";
+const readUserName = (): string => {
+  const userName = localStorage.getItem(
+    `${process.env.NEXT_PUBLIC_LOCAL_STORAGE_PREFIX}-name`
+  );
+  return userName ?? "";
 };
 
-export const useName = () => {
-  const [name, setName] = useState<string>("");
+export const useUserName = () => {
+  const [userName, setUserName] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // NOTE: read name from local-storage
-    setName(readName());
+    setUserName(readUserName());
     setLoading(false);
   }, []);
 
   return {
-    name,
-    setName,
+    userName,
+    setUserName,
     loading,
   };
 };

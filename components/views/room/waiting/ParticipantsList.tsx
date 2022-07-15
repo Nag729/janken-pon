@@ -10,7 +10,7 @@ const ParticipantBadge = dynamic(
 );
 
 type ParticipantsListProps = {
-  nameList: string[];
+  userNameList: string[];
 };
 
 export default function ParticipantsList(
@@ -25,8 +25,8 @@ export default function ParticipantsList(
 
       {/* Participants Badge */}
       <Box my="2" display="flex" gap="4" alignItems="center">
-        {props.nameList.map((name) => (
-          <ParticipantBadge key={name} name={name} />
+        {props.userNameList.map((userName) => (
+          <ParticipantBadge key={userName} userName={userName} />
         ))}
       </Box>
     </Fragment>
