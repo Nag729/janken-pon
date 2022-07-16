@@ -2,6 +2,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { checkGameMasterApi } from "../../../api/api";
 import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../../components/views/room/waiting/ShareLink";
 import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
@@ -15,33 +16,38 @@ const Room = () => {
   const router = useRouter();
   const toast = useToast();
 
-  const { roomId } = router.query;
-  const url = `localhost:3000/${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`; // FIXME:
-  // const url = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`;
+  const { roomId } = router.query as { roomId: string };
+  const ROOM_URL = `localhost:3000/${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`; // FIXME:
+  // const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`;
 
-  const { userName, loading } = useUserName();
+  const { userName, loadingUser } = useUserName();
   const [userNameList, setUserNameList] = React.useState<string[]>([]);
-
-  const socket = useSocket(
-    process.env.NEXT_PUBLIC_SOCKET_URL || `http://localhost:3001`
-  );
+  const [isGameMaster, setIsGameMaster] = React.useState<boolean>(false);
+  const socket = useSocket();
 
   useEffect(() => {
-    if (loading || !roomId || !socket) return;
+    if (loadingUser || !router.isReady) return;
+    checkGameMasterApi({ roomId, userName }).then((res) => {
+      setIsGameMaster(res);
+    });
+  }, [loadingUser, roomId, router]);
+
+  useEffect(() => {
+    if (loadingUser || !router.isReady || !socket) return;
     // NOTE: Join to the room.
-    socket.emit(`join`, { userName, roomId });
-  }, [loading, roomId, socket]);
+    socket.emit(`join-room`, { roomId, userName });
+  }, [loadingUser, roomId, router, socket]);
 
   useEffect(() => {
     if (!socket) return;
-
-    socket.on(`update-user-name-list`, (userNameList: string[]) => {
-      setUserNameList([...userNameList]);
+    // NOTE: update user-name list.
+    socket.on(`update-user-name-list`, (props: { userNameList: string[] }) => {
+      setUserNameList([...props.userNameList]);
     });
   }, [socket]);
 
   const copyUrl = async () => {
-    await copyToClipboard(url);
+    await copyToClipboard(ROOM_URL);
 
     toast({
       title: `URL をコピーしました`,
@@ -60,10 +66,10 @@ const Room = () => {
     <section className={styles.container}>
       <main className={styles.main}>
         {/* TODO: 後からリンクで入ってきた人向けのフォームをつくる */}
-        {/* TODO: GameMaster かどうかはサーバー側で判断する */}
+        <h4>isGameMaster: {!!isGameMaster ? `true` : `false`}</h4>
 
         {/* Share Link */}
-        <ShareLink url={url} onCopy={copyUrl} />
+        <ShareLink url={ROOM_URL} onCopy={copyUrl} />
 
         {/* Participants List */}
         <ParticipantsList userNameList={userNameList} />

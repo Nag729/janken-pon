@@ -12,17 +12,17 @@ const readUserName = (): string => {
 
 export const useUserName = () => {
   const [userName, setUserName] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     // NOTE: read name from local-storage
     setUserName(readUserName());
-    setLoading(false);
+    setLoadingUser(false);
   }, []);
 
   return {
     userName,
     setUserName,
-    loading,
+    loadingUser,
   };
 };

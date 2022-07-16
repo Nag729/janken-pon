@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import { createNewRoomApi } from "../api/api";
 import CreateRoomForm from "../components/views/welcome/CreateRoomForm";
 import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
@@ -23,12 +24,16 @@ export default function Home() {
   /**
    * Functions
    */
-  const createNewRoom = () => {
+  const createNewRoom = async () => {
     localStorage.setItem(
       `${process.env.NEXT_PUBLIC_LOCAL_STORAGE_PREFIX}-name`,
       userName
     );
-    router.push(`/room/${uuidv4()}/waiting`);
+
+    // TODO: サーバー側から新しい roomId を取得する
+    const roomId = uuidv4();
+    await createNewRoomApi({ roomId, userName });
+    router.push(`/room/${roomId}/waiting`);
   };
 
   return (
