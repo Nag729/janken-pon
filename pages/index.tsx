@@ -6,8 +6,7 @@ import { createNewRoomApi, generateNewRoomId } from "../api/api";
 import CreateRoomForm from "../components/views/welcome/CreateRoomForm";
 import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
-import { IsHostContext } from "../context/isHostContext";
-import { useUserName } from "../hooks/useName";
+import { GlobalContext } from "../context/globalContext";
 import styles from "../styles/Home.module.css";
 
 /**
@@ -20,19 +19,18 @@ const RpsEmoji = dynamic(() => import("../components/uiParts/RpsEmoji"), {
 
 export default function Home() {
   const router = useRouter();
-  const { dispatch } = useContext(IsHostContext);
-  const { userName, setUserName } = useUserName();
+  const { state, dispatch } = useContext(GlobalContext);
+
+  // userName
+  const userName = state.userName;
+  const setUserName = (userName: string) => {
+    dispatch({ type: `SET_USER_NAME`, payload: userName });
+  };
 
   /**
    * Functions
    */
   const createNewRoom = async () => {
-    // NOTE: save name to localStorage for next time.
-    localStorage.setItem(
-      `${process.env.NEXT_PUBLIC_LOCAL_STORAGE_PREFIX}-name`,
-      userName
-    );
-
     const roomId: string = await generateNewRoomId();
     await createNewRoomApi({ roomId });
 

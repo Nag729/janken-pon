@@ -7,7 +7,9 @@ type ChooseRpsHandProps = {
   chooseHand: (hand: RpsHand) => void;
 };
 
-export default function ChooseRpsHand(props: ChooseRpsHandProps): JSX.Element {
+export default function RpsHandCardList(
+  props: ChooseRpsHandProps
+): JSX.Element {
   return (
     <Box my="4">
       {/* Heading */}

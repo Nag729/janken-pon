@@ -24,6 +24,7 @@ export default function ShareLink(props: ShareLinkProps): JSX.Element {
         <Button
           rightIcon={<CopyIcon />}
           colorScheme="blue"
+          variant="outline"
           size="lg"
           width="100%"
           aria-label="Copy"

@@ -6,11 +6,10 @@ import JoinRoomForm from "../../../components/views/room/waiting/JoinRoomForm";
 import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../../components/views/room/waiting/ShareLink";
 import StartRpsButton from "../../../components/views/room/waiting/StartRpsButton";
-import { IsHostContext } from "../../../context/isHostContext";
+import { GlobalContext } from "../../../context/globalContext";
 import { SocketContext } from "../../../context/socketContext";
 import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
 import { sleep } from "../../../helpers/sleep";
-import { useUserName } from "../../../hooks/useName";
 import styles from "../../../styles/Home.module.css";
 
 const WaitingRoom = () => {
@@ -20,21 +19,31 @@ const WaitingRoom = () => {
 
   const toast = useToast();
   const { socket } = useContext(SocketContext);
-  const { state: isHostState } = useContext(IsHostContext);
-  const { userName, setUserName, loadingUser } = useUserName();
-  const [userNameList, setUserNameList] = useState<string[]>([]);
-  const [isUserReady, setIsUserReady] = useState<boolean>(isHostState.isHost);
+  const { state, dispatch } = useContext(GlobalContext);
+
+  // userName
+  const userName = state.userName;
+  const setUserName = (userName: string) => {
+    dispatch({ type: `SET_USER_NAME`, payload: userName });
+  };
+
+  // userNameList
+  const userNameList = state.userNameList;
+  const setUserNameList = (userNameList: string[]) => {
+    dispatch({ type: `SET_USER_NAME_LIST`, payload: userNameList });
+  };
+
+  const [isUserReady, setIsUserReady] = useState<boolean>(state.isHost);
   const [waitForStart, setWaitForStart] = useState<boolean>(false);
 
   /**
    * Socket.IO
    */
   useEffect(() => {
-    if (!isUserReady || loadingUser || !router.isReady || !socket) return;
-
+    if (!isUserReady || !router.isReady) return;
     // NOTE: Join to the room.
     socket.emit(`room`, { roomId, userName });
-  }, [isUserReady, loadingUser, roomId, router, socket]);
+  }, [isUserReady, roomId, router]);
 
   useEffect(() => {
     socket.on(`user-name-list-updated`, (props: { userNameList: string[] }) => {
@@ -44,8 +53,7 @@ const WaitingRoom = () => {
     socket.once(`rps-started`, async () => {
       setWaitForStart(true);
       toast({
-        title: "じゃんけんを開始します...",
-        description: "The game will start soon.",
+        title: "まもなく開始します...",
         status: "success",
         duration: 1000,
       });
@@ -93,7 +101,7 @@ const WaitingRoom = () => {
     await copyToClipboard(ROOM_URL);
 
     toast({
-      title: `URL をコピーしました 👍`,
+      title: `コピーしました 👍`,
       status: `success`,
       duration: 2000,
     });

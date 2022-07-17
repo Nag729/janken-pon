@@ -7,7 +7,7 @@ import "nprogress/nprogress.css";
 import * as React from "react";
 import TheFooter from "../components/projects/TheFooter";
 import TheHeader from "../components/projects/TheHeader";
-import { IsHostProvider } from "../context/isHostContext";
+import { GlobalContextProvider } from "../context/globalContext";
 import { SocketProvider } from "../context/socketContext";
 import "../styles/globals.css";
 
@@ -19,7 +19,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 function App({ Component, pageProps }: AppProps) {
   return (
     <SocketProvider>
-      <IsHostProvider>
+      <GlobalContextProvider>
         <ChakraProvider>
           {/* Head */}
           <Head>
@@ -36,7 +36,7 @@ function App({ Component, pageProps }: AppProps) {
           {/* TheFooter */}
           <TheFooter />
         </ChakraProvider>
-      </IsHostProvider>
+      </GlobalContextProvider>
     </SocketProvider>
   );
 }
