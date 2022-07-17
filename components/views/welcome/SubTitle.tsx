@@ -21,7 +21,7 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
         color="blue.400"
         letterSpacing="0.6rem"
       >
-        じゃんけんをしよう
+        じゃんけんしよう
       </Heading>
     </Box>
   );

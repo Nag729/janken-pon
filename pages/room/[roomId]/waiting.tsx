@@ -17,8 +17,7 @@ const Room = () => {
   const toast = useToast();
 
   const { roomId } = router.query as { roomId: string };
-  const ROOM_URL = `localhost:3000/${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`; // FIXME:
-  // const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`;
+  const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/room/${roomId}/waiting`;
 
   const socket = useSocket();
   const { state } = React.useContext(IsHostContext);
@@ -30,7 +29,7 @@ const Room = () => {
     if (!isUserReady || loadingUser || !router.isReady || !socket) return;
 
     // NOTE: Join to the room.
-    socket.emit(`join-to-room`, { roomId, userName });
+    socket.emit(`room`, { roomId, userName });
   }, [isUserReady, loadingUser, roomId, router, socket]);
 
   useEffect(() => {
