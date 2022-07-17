@@ -117,7 +117,7 @@ const WaitingRoom = () => {
         {isUserReady && (
           <Fragment>
             {/* Share Link */}
-            <ShareLink url={ROOM_URL} onCopy={copyUrl} />
+            <ShareLink onCopy={copyUrl} />
 
             {/* Participants List */}
             <ParticipantsList userNameList={userNameList} />
