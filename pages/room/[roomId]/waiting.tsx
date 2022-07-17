@@ -1,29 +1,28 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { verifyRoomApi, verifyUserNameApi } from "../../../api/api";
 import JoinRoomForm from "../../../components/views/room/waiting/JoinRoomForm";
 import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../../components/views/room/waiting/ShareLink";
 import StartRpsButton from "../../../components/views/room/waiting/StartRpsButton";
 import { IsHostContext } from "../../../context/isHostContext";
+import { SocketContext } from "../../../context/socketContext";
 import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
 import { useUserName } from "../../../hooks/useName";
-import { useSocket } from "../../../hooks/useSocket";
 import styles from "../../../styles/Home.module.css";
 
-const Room = () => {
+const WaitingRoom = () => {
   const router = useRouter();
-  const toast = useToast();
-
   const { roomId } = router.query as { roomId: string };
   const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/room/${roomId}/waiting`;
 
-  const socket = useSocket();
-  const { state } = React.useContext(IsHostContext);
+  const toast = useToast();
+  const { socket } = useContext(SocketContext);
+  const { state: isHostState } = useContext(IsHostContext);
   const { userName, setUserName, loadingUser } = useUserName();
-  const [userNameList, setUserNameList] = React.useState<string[]>([]);
-  const [isUserReady, setIsUserReady] = React.useState<boolean>(state.isHost);
+  const [userNameList, setUserNameList] = useState<string[]>([]);
+  const [isUserReady, setIsUserReady] = useState<boolean>(isHostState.isHost);
 
   useEffect(() => {
     if (!isUserReady || loadingUser || !router.isReady || !socket) return;
@@ -35,9 +34,13 @@ const Room = () => {
   useEffect(() => {
     if (!socket) return;
 
-    // NOTE: update user-name list.
     socket.on(`update-user-name-list`, (props: { userNameList: string[] }) => {
       setUserNameList([...props.userNameList]);
+    });
+
+    socket.on(`rps-started`, () => {
+      alert("RPSが開始されました。");
+      // TODO: push to the RPS page.
     });
   }, [socket]);
 
@@ -85,8 +88,14 @@ const Room = () => {
   };
 
   const startRps = () => {
-    alert(`じゃんけんを始める`);
-    // TODO:
+    if (!socket) {
+      toast({
+        title: `接続できませんでした 🥲`,
+        status: `error`,
+      });
+      return;
+    }
+    socket.emit(`start-rps`);
   };
 
   return (
@@ -117,4 +126,4 @@ const Room = () => {
   );
 };
 
-export default Room;
+export default WaitingRoom;
