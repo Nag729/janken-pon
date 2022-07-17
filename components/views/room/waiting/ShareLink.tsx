@@ -8,7 +8,7 @@ type ShareLinkProps = {
 export default function ShareLink(props: ShareLinkProps): JSX.Element {
   return (
     <Box
-      my="8"
+      my="12"
       display="flex"
       flexDirection="column"
       gap="6"

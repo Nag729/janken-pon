@@ -6,6 +6,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import * as React from "react";
 import TheFooter from "../components/projects/TheFooter";
+import TheHeader from "../components/projects/TheHeader";
 import { IsHostProvider } from "../context/isHostContext";
 import { SocketProvider } from "../context/socketContext";
 import "../styles/globals.css";
@@ -25,6 +26,9 @@ function App({ Component, pageProps }: AppProps) {
             <title>Janken Pon ✌️</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
+
+          {/* Header */}
+          <TheHeader />
 
           {/* main component */}
           <Component {...pageProps} />

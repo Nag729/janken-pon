@@ -11,7 +11,7 @@ const MINIMUM_PLAYER_NUMBER = 2;
 
 export default function StartRpsButton(props: StartRpsProps): JSX.Element {
   return (
-    <Box w="320px" mt="10">
+    <Box my="12">
       <Button
         rightIcon={<ArrowForwardIcon />}
         colorScheme="blue"
