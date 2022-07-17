@@ -37,13 +37,11 @@ const WaitingRoom = () => {
   }, [isUserReady, loadingUser, roomId, router, socket]);
 
   useEffect(() => {
-    if (!socket) return;
-
-    socket.on(`update-user-name-list`, (props: { userNameList: string[] }) => {
+    socket.on(`user-name-list-updated`, (props: { userNameList: string[] }) => {
       setUserNameList([...props.userNameList]);
     });
 
-    socket.on(`rps-started`, async () => {
+    socket.once(`rps-started`, async () => {
       setWaitForStart(true);
       toast({
         title: "じゃんけんを開始します...",
@@ -52,9 +50,11 @@ const WaitingRoom = () => {
         duration: 1000,
       });
       await sleep(1000);
+
+      // FIXME: 後から参加した側で roomId が取れてない問題:
       router.push(`/room/${roomId}/rps`);
     });
-  }, [socket]);
+  }, []);
 
   /**
    * Functions
@@ -100,13 +100,6 @@ const WaitingRoom = () => {
   };
 
   const startRps = () => {
-    if (!socket) {
-      toast({
-        title: `接続できませんでした 🥲`,
-        status: `error`,
-      });
-      return;
-    }
     socket.emit(`start-rps`);
   };
 

@@ -3,6 +3,7 @@ import { RpsHand, RPS_HAND_TYPE_LIST } from "../../../uiParts/RpsEmoji";
 import RpsHandCard from "./RpsHandCard";
 
 type ChooseRpsHandProps = {
+  chosenHand?: RpsHand;
   chooseHand: (hand: RpsHand) => void;
 };
 
@@ -17,7 +18,12 @@ export default function ChooseRpsHand(props: ChooseRpsHandProps): JSX.Element {
       {/* Choose Rps Hand */}
       <Box mt="6" mb="4" display="flex" gap="12" alignItems="center">
         {RPS_HAND_TYPE_LIST.map((hand) => (
-          <RpsHandCard key={hand} hand={hand} chooseHand={props.chooseHand} />
+          <RpsHandCard
+            key={hand}
+            hand={hand}
+            chosenHand={props.chosenHand}
+            chooseHand={props.chooseHand}
+          />
         ))}
       </Box>
     </Box>
