@@ -9,6 +9,7 @@ import StartRpsButton from "../../../components/views/room/waiting/StartRpsButto
 import { IsHostContext } from "../../../context/isHostContext";
 import { SocketContext } from "../../../context/socketContext";
 import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
+import { sleep } from "../../../helpers/sleep";
 import { useUserName } from "../../../hooks/useName";
 import styles from "../../../styles/Home.module.css";
 
@@ -23,7 +24,11 @@ const WaitingRoom = () => {
   const { userName, setUserName, loadingUser } = useUserName();
   const [userNameList, setUserNameList] = useState<string[]>([]);
   const [isUserReady, setIsUserReady] = useState<boolean>(isHostState.isHost);
+  const [waitForStart, setWaitForStart] = useState<boolean>(false);
 
+  /**
+   * Socket.IO
+   */
   useEffect(() => {
     if (!isUserReady || loadingUser || !router.isReady || !socket) return;
 
@@ -38,9 +43,16 @@ const WaitingRoom = () => {
       setUserNameList([...props.userNameList]);
     });
 
-    socket.on(`rps-started`, () => {
-      alert("RPSが開始されました。");
-      // TODO: push to the RPS page.
+    socket.on(`rps-started`, async () => {
+      setWaitForStart(true);
+      toast({
+        title: "じゃんけんを開始します...",
+        description: "The game will start soon.",
+        status: "success",
+        duration: 1000,
+      });
+      await sleep(1000);
+      router.push(`/room/${roomId}/rps`);
     });
   }, [socket]);
 
@@ -56,7 +68,7 @@ const WaitingRoom = () => {
         status: `error`,
         duration: 1000,
       });
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await sleep(1000);
       router.push("/");
       return;
     }
@@ -118,7 +130,11 @@ const WaitingRoom = () => {
             <ParticipantsList userNameList={userNameList} />
 
             {/* Janken Start Button */}
-            <StartRpsButton userNameList={userNameList} onClick={startRps} />
+            <StartRpsButton
+              userNameList={userNameList}
+              disabled={waitForStart}
+              onClick={startRps}
+            />
           </Fragment>
         )}
       </main>

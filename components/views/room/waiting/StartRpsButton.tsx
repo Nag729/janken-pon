@@ -3,6 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 
 type StartRpsProps = {
   userNameList: string[];
+  disabled: boolean;
   onClick: () => void;
 };
 
@@ -16,7 +17,9 @@ export default function StartRpsButton(props: StartRpsProps): JSX.Element {
         colorScheme="blue"
         size="lg"
         width="100%"
-        disabled={props.userNameList.length < MINIMUM_PLAYER_NUMBER}
+        disabled={
+          props.userNameList.length < MINIMUM_PLAYER_NUMBER || props.disabled
+        }
         onClick={props.onClick}
       >
         このメンバーではじめる
