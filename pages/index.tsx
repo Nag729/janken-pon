@@ -1,11 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { v4 as uuidv4 } from "uuid";
-import { createNewRoomApi } from "../api/api";
+import { useContext } from "react";
+import { createNewRoomApi, generateNewRoomId } from "../api/api";
 import CreateRoomForm from "../components/views/welcome/CreateRoomForm";
 import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
+import { IsHostContext } from "../context/isHostContext";
 import { useUserName } from "../hooks/useName";
 import styles from "../styles/Home.module.css";
 
@@ -19,20 +20,23 @@ const RpsEmoji = dynamic(() => import("../components/uiParts/RpsEmoji"), {
 
 export default function Home() {
   const router = useRouter();
+  const { dispatch } = useContext(IsHostContext);
   const { userName, setUserName } = useUserName();
 
   /**
    * Functions
    */
   const createNewRoom = async () => {
+    // NOTE: save name to localStorage for next time.
     localStorage.setItem(
       `${process.env.NEXT_PUBLIC_LOCAL_STORAGE_PREFIX}-name`,
       userName
     );
 
-    // TODO: サーバー側から新しい roomId を取得する
-    const roomId = uuidv4();
-    await createNewRoomApi({ roomId, userName });
+    const roomId: string = await generateNewRoomId();
+    await createNewRoomApi({ roomId });
+
+    dispatch({ type: `SWITCH_TO_HOST` });
     router.push(`/room/${roomId}/waiting`);
   };
 

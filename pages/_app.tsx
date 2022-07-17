@@ -6,6 +6,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import * as React from "react";
 import TheFooter from "../components/projects/TheFooter";
+import { IsHostProvider } from "../context/isHostContext";
 import "../styles/globals.css";
 
 // events for NProgress
@@ -15,19 +16,21 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
-      {/* Head */}
-      <Head>
-        <title>Janken Pon ✌️</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <IsHostProvider>
+      <ChakraProvider>
+        {/* Head */}
+        <Head>
+          <title>Janken Pon ✌️</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      {/* main component */}
-      <Component {...pageProps} />
+        {/* main component */}
+        <Component {...pageProps} />
 
-      {/* TheFooter */}
-      <TheFooter />
-    </ChakraProvider>
+        {/* TheFooter */}
+        <TheFooter />
+      </ChakraProvider>
+    </IsHostProvider>
   );
 }
 export default App;

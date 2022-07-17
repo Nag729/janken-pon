@@ -2,9 +2,9 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { checkGameMasterApi } from "../../../api/api";
 import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../../components/views/room/waiting/ShareLink";
+import { IsHostContext } from "../../../context/isHostContext";
 import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
 import { useUserName } from "../../../hooks/useName";
 import { useSocket } from "../../../hooks/useSocket";
@@ -20,19 +20,13 @@ const Room = () => {
   const ROOM_URL = `localhost:3000/${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`; // FIXME:
   // const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`;
 
+  const { state } = React.useContext(IsHostContext);
   const { userName, loadingUser } = useUserName();
   const [userNameList, setUserNameList] = React.useState<string[]>([]);
-  const [isGameMaster, setIsGameMaster] = React.useState<boolean>(false);
   const socket = useSocket();
 
   useEffect(() => {
-    if (loadingUser || !router.isReady) return;
-    checkGameMasterApi({ roomId, userName }).then((res) => {
-      setIsGameMaster(res);
-    });
-  }, [loadingUser, roomId, router]);
-
-  useEffect(() => {
+    // TODO: すぐに参加するのをやめる
     if (loadingUser || !router.isReady || !socket) return;
     // NOTE: Join to the room.
     socket.emit(`join-room`, { roomId, userName });
@@ -66,7 +60,7 @@ const Room = () => {
     <section className={styles.container}>
       <main className={styles.main}>
         {/* TODO: 後からリンクで入ってきた人向けのフォームをつくる */}
-        <h4>isGameMaster: {!!isGameMaster ? `true` : `false`}</h4>
+        <h4>isHost: {!!state.isHost ? `true` : `false`}</h4>
 
         {/* Share Link */}
         <ShareLink url={ROOM_URL} onCopy={copyUrl} />

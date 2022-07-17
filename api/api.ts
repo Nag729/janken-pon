@@ -9,25 +9,21 @@ const api = axios.create({
   timeout,
 });
 
+export const generateNewRoomId = async (): Promise<string> => {
+  const response: AxiosResponse | undefined = await api
+    .post(`/generate/room-id`)
+    .catch((error: AxiosError) => Promise.reject(error.response?.data));
+
+  if (!response) {
+    throw new Error("No response from server");
+  }
+  return response.data;
+};
+
 export const createNewRoomApi = async (body: {
   roomId: string;
-  userName: string;
 }): Promise<void> => {
   await api
     .post(`/create/room`, body)
     .catch((error: AxiosError) => Promise.reject(error.response?.data));
-};
-
-export const checkGameMasterApi = async (params: {
-  roomId: string;
-  userName: string;
-}): Promise<boolean> => {
-  const response: AxiosResponse | undefined = await api
-    .get(`/check/game-master`, { params })
-    .catch((error: AxiosError) => Promise.reject(error.response?.data));
-
-  if (!response || response.status === HttpStatusCode.NO_CONTENT) {
-    return false;
-  }
-  return response.data;
 };
