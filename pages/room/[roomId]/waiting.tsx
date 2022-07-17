@@ -1,6 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect } from "react";
+import { verifyRoomApi, verifyUserNameApi } from "../../../api/api";
 import JoinRoomForm from "../../../components/views/room/waiting/JoinRoomForm";
 import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../../components/views/room/waiting/ShareLink";
@@ -19,12 +20,11 @@ const Room = () => {
   const ROOM_URL = `localhost:3000/${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`; // FIXME:
   // const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_ROOM_PAGE_URL}/${roomId}/waiting`;
 
+  const socket = useSocket();
   const { state } = React.useContext(IsHostContext);
   const { userName, setUserName, loadingUser } = useUserName();
   const [userNameList, setUserNameList] = React.useState<string[]>([]);
   const [isUserReady, setIsUserReady] = React.useState<boolean>(state.isHost);
-
-  const socket = useSocket();
 
   useEffect(() => {
     if (!isUserReady || loadingUser || !router.isReady || !socket) return;
@@ -46,7 +46,31 @@ const Room = () => {
    * Functions
    */
   const joinRoom = async () => {
-    // TODO: userName が重複してないかの検証
+    const existRoom = await verifyRoomApi({ roomId });
+    if (!existRoom) {
+      toast({
+        title: `部屋が存在しません 🥲`,
+        description: `トップページに戻ります...`,
+        status: `error`,
+        duration: 1000,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      router.push("/");
+      return;
+    }
+
+    const isDuplicateName: boolean = await verifyUserNameApi({
+      roomId,
+      userName,
+    });
+    if (!isDuplicateName) {
+      toast({
+        title: `名前が重複しています 🥲`,
+        description: `別の名前を入力してください`,
+        status: `error`,
+      });
+      return;
+    }
 
     setIsUserReady(true);
   };
@@ -55,10 +79,9 @@ const Room = () => {
     await copyToClipboard(ROOM_URL);
 
     toast({
-      title: `URL をコピーしました`,
+      title: `URL をコピーしました 👍`,
       status: `success`,
-      duration: 1500,
-      isClosable: true,
+      duration: 2000,
     });
   };
 
