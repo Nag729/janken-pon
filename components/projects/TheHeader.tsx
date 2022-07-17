@@ -8,9 +8,11 @@ export default function TheHeader(): JSX.Element {
       position="fixed"
       top={0}
       width="full"
+      bg="white"
       shadow="sm"
       py={4}
       px={8}
+      zIndex={9}
     >
       <Box>
         <Heading size="lg" color="gray.700">

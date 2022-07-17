@@ -13,13 +13,7 @@ export default function CreateRoomForm(
   const hasUserName: boolean = !!props.userName.length;
 
   return (
-    <Box
-      w="100vw"
-      my="4"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-    >
+    <Box w="100vw" display="flex" flexDirection="column" alignItems="center">
       {/* User Name Input */}
       <Box w="320px" my="2">
         <Input
@@ -33,7 +27,7 @@ export default function CreateRoomForm(
       </Box>
 
       {/* Create Room Button */}
-      <Box w="160px" mt="6">
+      <Box w="160px" mt="4">
         <Button
           rightIcon={<ArrowForwardIcon />}
           colorScheme="blue"
