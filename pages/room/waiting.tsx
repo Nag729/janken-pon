@@ -1,21 +1,21 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { verifyRoomApi, verifyUserNameApi } from "../../../api/api";
-import JoinRoomForm from "../../../components/views/room/waiting/JoinRoomForm";
-import ParticipantsList from "../../../components/views/room/waiting/ParticipantsList";
-import ShareLink from "../../../components/views/room/waiting/ShareLink";
-import StartRpsButton from "../../../components/views/room/waiting/StartRpsButton";
-import { GlobalContext } from "../../../context/globalContext";
-import { SocketContext } from "../../../context/socketContext";
-import { copyToClipboard } from "../../../helpers/copy-to-clipboard";
-import { sleep } from "../../../helpers/sleep";
-import styles from "../../../styles/Home.module.css";
+import { verifyRoomApi, verifyUserNameApi } from "../../api/api";
+import JoinRoomForm from "../../components/views/room/waiting/JoinRoomForm";
+import ParticipantsList from "../../components/views/room/waiting/ParticipantsList";
+import ShareLink from "../../components/views/room/waiting/ShareLink";
+import StartRpsButton from "../../components/views/room/waiting/StartRpsButton";
+import { GlobalContext } from "../../context/globalContext";
+import { SocketContext } from "../../context/socketContext";
+import { copyToClipboard } from "../../helpers/copy-to-clipboard";
+import { sleep } from "../../helpers/sleep";
+import styles from "../../styles/Home.module.css";
 
 const WaitingRoom = () => {
   const router = useRouter();
   const { roomId } = router.query as { roomId: string };
-  const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/room/${roomId}/waiting`;
+  const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/room/waiting?roomId=${roomId}`;
 
   const toast = useToast();
   const { socket } = useContext(SocketContext);
@@ -43,9 +43,11 @@ const WaitingRoom = () => {
     if (!isUserReady || !router.isReady) return;
     // NOTE: Join to the room.
     socket.emit(`room`, { roomId, userName });
-  }, [isUserReady, roomId, router]);
+  }, [isUserReady, router]);
 
   useEffect(() => {
+    if (!router.isReady) return;
+
     socket.on(`user-name-list-updated`, (props: { userNameList: string[] }) => {
       setUserNameList([...props.userNameList]);
     });
@@ -58,11 +60,9 @@ const WaitingRoom = () => {
         duration: 1000,
       });
       await sleep(1000);
-
-      // FIXME: 後から参加した側で roomId が取れてない問題:
-      router.push(`/room/${roomId}/rps`);
+      router.push(`/room/rps?roomId=${roomId}`);
     });
-  }, []);
+  }, [router]);
 
   /**
    * Functions

@@ -1,12 +1,12 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Fragment, useContext, useEffect, useState } from "react";
-import { RpsHand } from "../../../components/uiParts/RpsEmoji";
-import OtherUserBadgeList from "../../../components/views/room/rps/OtherUserBadgeList";
-import RpsHandCardList from "../../../components/views/room/rps/RpsHandCardList";
-import { GlobalContext } from "../../../context/globalContext";
-import { SocketContext } from "../../../context/socketContext";
-import styles from "../../../styles/Home.module.css";
+import { RpsHand } from "../../components/uiParts/RpsEmoji";
+import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
+import RpsHandCardList from "../../components/views/room/rps/RpsHandCardList";
+import { GlobalContext } from "../../context/globalContext";
+import { SocketContext } from "../../context/socketContext";
+import styles from "../../styles/Home.module.css";
 
 type BattleResult = {
   winnerList: string[];
@@ -51,6 +51,8 @@ const RpsRoom = () => {
       async (props: { battleResult: BattleResult }) => {
         console.log(`*** round-settled ***`);
         console.log(props.battleResult);
+
+        // TODO: battleResult を表示する!!
       }
     );
   }, []);

@@ -35,7 +35,7 @@ export default function Home() {
     await createNewRoomApi({ roomId });
 
     dispatch({ type: `SWITCH_TO_HOST` });
-    router.push(`/room/${roomId}/waiting`);
+    router.push(`/room/waiting?roomId=${roomId}`);
   };
 
   return (
