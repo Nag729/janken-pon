@@ -10,7 +10,7 @@ export default function TheFooter(): JSX.Element {
         <Link
           className="footer-link"
           color="teal.200"
-          href="https://github.com/Nag729/janken-pon"
+          href="https://github.com/Nag729"
           isExternal
         >
           Nag729 😎
