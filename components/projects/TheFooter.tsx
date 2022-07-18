@@ -9,7 +9,7 @@ export default function TheFooter(): JSX.Element {
         Created by{" "}
         <Link
           className="footer-link"
-          color="teal.500"
+          color="teal.200"
           href="https://github.com/Nag729/janken-pon"
           isExternal
         >

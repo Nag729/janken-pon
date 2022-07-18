@@ -9,7 +9,7 @@ export default function TheHeader(): JSX.Element {
       top={0}
       width="full"
       bg="white"
-      shadow="sm"
+      shadow="md"
       py={4}
       px={8}
       zIndex={9}
