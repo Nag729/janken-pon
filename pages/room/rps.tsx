@@ -29,9 +29,6 @@ const RpsRoom = () => {
 
   // userNameList
   const userNameList = state.userNameList;
-  const setUserNameList = (userNameList: string[]) => {
-    dispatch({ type: `SET_USER_NAME_LIST`, payload: userNameList });
-  };
 
   const [chosenHand, setChosenHand] = useState<RpsHand | undefined>(undefined);
   const [chosenUserNameList, setChosenUserNameList] = useState<string[]>([]);
