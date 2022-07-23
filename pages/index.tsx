@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -7,6 +7,10 @@ import CreateRoomForm from "../components/views/welcome/CreateRoomForm";
 import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
 import { GlobalContext } from "../context/globalContext";
+import {
+  isUserNameTooLong,
+  USER_NAME_TOO_LONG_TOAST_OPTIONS,
+} from "../helpers/user-name/user-name.helper";
 import styles from "../styles/Home.module.css";
 
 /**
@@ -20,6 +24,7 @@ const RpsEmoji = dynamic(() => import("../components/uiParts/RpsEmoji"), {
 export default function Home() {
   const router = useRouter();
   const { state, dispatch } = useContext(GlobalContext);
+  const toast = useToast();
 
   // userName
   const userName = state.userName;
@@ -31,6 +36,11 @@ export default function Home() {
    * Functions
    */
   const createNewRoom = async () => {
+    if (isUserNameTooLong(userName)) {
+      toast(USER_NAME_TOO_LONG_TOAST_OPTIONS);
+      return;
+    }
+
     const roomId: string = await generateNewRoomId();
     await createNewRoomApi({ roomId });
 

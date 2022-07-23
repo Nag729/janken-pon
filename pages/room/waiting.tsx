@@ -8,14 +8,27 @@ import ShareLink from "../../components/views/room/waiting/ShareLink";
 import StartRpsButton from "../../components/views/room/waiting/StartRpsButton";
 import { GlobalContext } from "../../context/globalContext";
 import { SocketContext } from "../../context/socketContext";
-import { copyToClipboard } from "../../helpers/copy-to-clipboard";
-import { sleep } from "../../helpers/sleep";
+import {
+  COPIED_TOAST_OPTIONS,
+  copyToClipboard,
+} from "../../helpers/copy-to-clipboard.helper";
+import {
+  createRoomUrl,
+  NOT_EXIST_ROOM_TOAST_OPTIONS,
+  RPS_START_TOAST_OPTIONS,
+} from "../../helpers/rps-room/rps-room.helper";
+import { sleep } from "../../helpers/sleep.helper";
+import {
+  isUserNameTooLong,
+  USER_NAME_DUPLICATE_TOAST_OPTIONS,
+  USER_NAME_TOO_LONG_TOAST_OPTIONS,
+} from "../../helpers/user-name/user-name.helper";
 import styles from "../../styles/Home.module.css";
 
 const WaitingRoom = () => {
   const router = useRouter();
   const { roomId } = router.query as { roomId: string };
-  const ROOM_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/room/waiting?roomId=${roomId}`;
+  const ROOM_URL = createRoomUrl(roomId);
 
   const toast = useToast();
   const { socket } = useContext(SocketContext);
@@ -54,11 +67,7 @@ const WaitingRoom = () => {
 
     socket.once(`rps-started`, async () => {
       setWaitForStart(true);
-      toast({
-        title: "まもなく開始します...",
-        status: "success",
-        duration: 1000,
-      });
+      toast(RPS_START_TOAST_OPTIONS);
       await sleep(1000);
       router.push(`/room/rps?roomId=${roomId}`);
     });
@@ -68,14 +77,14 @@ const WaitingRoom = () => {
    * Functions
    */
   const joinRoom = async () => {
+    if (isUserNameTooLong(userName)) {
+      toast(USER_NAME_TOO_LONG_TOAST_OPTIONS);
+      return;
+    }
+
     const existRoom = await verifyRoomApi({ roomId });
     if (!existRoom) {
-      toast({
-        title: `部屋が存在しません 🥲`,
-        description: `トップページに戻ります...`,
-        status: `error`,
-        duration: 1000,
-      });
+      toast(NOT_EXIST_ROOM_TOAST_OPTIONS);
       await sleep(1000);
       router.push("/");
       return;
@@ -86,11 +95,7 @@ const WaitingRoom = () => {
       userName,
     });
     if (!isDuplicateName) {
-      toast({
-        title: `名前が重複しています 🥲`,
-        description: `別の名前を入力してください`,
-        status: `error`,
-      });
+      toast(USER_NAME_DUPLICATE_TOAST_OPTIONS);
       return;
     }
 
@@ -99,12 +104,7 @@ const WaitingRoom = () => {
 
   const copyUrl = async () => {
     await copyToClipboard(ROOM_URL);
-
-    toast({
-      title: `コピーしました 👍`,
-      status: `success`,
-      duration: 2000,
-    });
+    toast(COPIED_TOAST_OPTIONS);
   };
 
   const startRps = () => {
