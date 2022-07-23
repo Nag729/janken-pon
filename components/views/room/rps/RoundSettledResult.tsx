@@ -9,18 +9,19 @@ export type UserHand = {
 };
 
 type RoundSettledResultProps = {
-  winnerList: string[];
+  roundWinnerList: string[];
   userHandList: UserHand[];
 };
 
 export default function RoundSettledResult(
   props: RoundSettledResultProps
 ): JSX.Element {
-  const displayWinners = useMemo(
-    () => props.winnerList.join(", "),
-    [props.winnerList]
+  const newWinners = useMemo(
+    () => props.roundWinnerList.join(", "),
+    [props.roundWinnerList]
   );
-  const isWinner = (userName: string) => props.winnerList.includes(userName);
+  const isNewWinner = (userName: string) =>
+    props.roundWinnerList.includes(userName);
 
   return (
     <Box my="4">
@@ -31,7 +32,7 @@ export default function RoundSettledResult(
           勝ったのは
         </Heading>
         <Heading size="2xl" color="blue.500">
-          {displayWinners}
+          {newWinners}
         </Heading>
         <Heading size="xl">🎉</Heading>
       </Flex>
@@ -43,7 +44,7 @@ export default function RoundSettledResult(
             key={userHand.userName}
             userName={userHand.userName}
             hand={userHand.hand}
-            isWinner={isWinner(userHand.userName)}
+            isWinner={isNewWinner(userHand.userName)}
           />
         ))}
       </Flex>

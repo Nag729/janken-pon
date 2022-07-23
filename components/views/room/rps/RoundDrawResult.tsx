@@ -7,12 +7,13 @@ export type UserHand = {
   hand: RpsHand;
 };
 
-type RoundResultProps = {
-  winnerList: string[];
+type RoundDrawResultProps = {
   userHandList: UserHand[];
 };
 
-export default function RoundResult(props: RoundResultProps): JSX.Element {
+export default function RoundDrawResult(
+  props: RoundDrawResultProps
+): JSX.Element {
   return (
     <Box my="4">
       {/* Heading */}

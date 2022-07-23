@@ -13,8 +13,7 @@ import styles from "../../styles/Home.module.css";
 import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 
 type BattleResult = {
-  // FIXME: roundWinnerList に rename する
-  winnerList: string[];
+  roundWinnerList: string[];
   userHandList: UserHand[];
 };
 
@@ -38,7 +37,7 @@ const RpsRoom = () => {
   const [chosenHand, setChosenHand] = useState<RpsHand | undefined>(undefined);
   const [chosenUserNameList, setChosenUserNameList] = useState<string[]>([]);
   const [roundStatus, setRoundStatus] = useState<RoundStatus>(`inBattle`);
-  const [winnerList, setWinnerList] = useState<string[]>([]);
+  const [roundWinnerList, setRoundWinnerList] = useState<string[]>([]);
   const [userHandList, setUserHandList] = useState<UserHand[]>([]);
 
   const isInBattle = useMemo(() => roundStatus === `inBattle`, [roundStatus]);
@@ -59,7 +58,7 @@ const RpsRoom = () => {
       `round-settled`,
       async (props: { battleResult: BattleResult }) => {
         setRoundStatus(`settled`);
-        setWinnerList(props.battleResult.winnerList);
+        setRoundWinnerList(props.battleResult.roundWinnerList);
         setUserHandList(props.battleResult.userHandList);
       }
     );
@@ -98,16 +97,13 @@ const RpsRoom = () => {
         {isRoundSettled && (
           <Fragment>
             {/* Round Result */}
-            {winnerList.length > 0 ? (
+            {roundWinnerList.length > 0 ? (
               <RoundSettledResult
-                winnerList={winnerList}
+                roundWinnerList={roundWinnerList}
                 userHandList={userHandList}
               />
             ) : (
-              <RoundDrawResult
-                winnerList={winnerList}
-                userHandList={userHandList}
-              />
+              <RoundDrawResult userHandList={userHandList} />
             )}
           </Fragment>
         )}
