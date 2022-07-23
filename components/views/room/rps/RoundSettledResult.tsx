@@ -1,19 +1,21 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { RpsHand } from "../../../uiParts/RpsEmoji";
-import { RoundResultHandCard } from "./RoundResultHandCard";
+import { RoundResultCard } from "./RoundResultCard";
 
 export type UserHand = {
   userName: string;
   hand: RpsHand;
 };
 
-type RoundResultProps = {
+type RoundSettledResultProps = {
   winnerList: string[];
   userHandList: UserHand[];
 };
 
-export default function RoundResult(props: RoundResultProps): JSX.Element {
+export default function RoundSettledResult(
+  props: RoundSettledResultProps
+): JSX.Element {
   const displayWinners = useMemo(
     () => props.winnerList.join(", "),
     [props.winnerList]
@@ -35,9 +37,9 @@ export default function RoundResult(props: RoundResultProps): JSX.Element {
       </Flex>
 
       {/* User Hand List */}
-      <Flex my="4" gap={8} alignItems="center">
+      <Flex my="8" gap={8} alignItems="center">
         {props.userHandList.map((userHand) => (
-          <RoundResultHandCard
+          <RoundResultCard
             key={userHand.userName}
             userName={userHand.userName}
             hand={userHand.hand}

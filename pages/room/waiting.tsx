@@ -90,6 +90,8 @@ const WaitingRoom = () => {
       return;
     }
 
+    // TODO: 部屋に人数が 8 人以上いるときは入れないようにする!!
+
     const isDuplicateName: boolean = await verifyUserNameApi({
       roomId,
       userName,

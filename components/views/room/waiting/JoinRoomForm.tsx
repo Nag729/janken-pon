@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Input, Button, Heading } from "@chakra-ui/react";
+import { Box, Input, Button, Heading, Flex } from "@chakra-ui/react";
 
 type JoinRoomFormProps = {
   userName: string;
@@ -17,13 +17,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
         名前を入力 ✍
       </Heading>
 
-      <Box
-        w="100vw"
-        my="2"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
+      <Flex w="100vw" my="2" flexDirection="column" alignItems="center">
         {/* User Name Input */}
         <Box w="320px" my="2">
           <Input
@@ -49,7 +43,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
             参加する
           </Button>
         </Box>
-      </Box>
+      </Flex>
     </Box>
   );
 }

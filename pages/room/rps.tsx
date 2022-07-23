@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { RpsHand } from "../../components/uiParts/RpsEmoji";
 import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
-import RoundResult, {
+import RoundSettledResult, {
   UserHand,
-} from "../../components/views/room/rps/RoundResult";
+} from "../../components/views/room/rps/RoundSettledResult";
 import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardList";
 import { GlobalContext } from "../../context/globalContext";
 import { SocketContext } from "../../context/socketContext";
 import styles from "../../styles/Home.module.css";
+import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 
 type BattleResult = {
   // FIXME: roundWinnerList に rename する
@@ -97,7 +98,17 @@ const RpsRoom = () => {
         {isRoundSettled && (
           <Fragment>
             {/* Round Result */}
-            <RoundResult winnerList={winnerList} userHandList={userHandList} />
+            {winnerList.length > 0 ? (
+              <RoundSettledResult
+                winnerList={winnerList}
+                userHandList={userHandList}
+              />
+            ) : (
+              <RoundDrawResult
+                winnerList={winnerList}
+                userHandList={userHandList}
+              />
+            )}
           </Fragment>
         )}
       </main>
