@@ -26,6 +26,8 @@ export default function CreateRoomForm(
         />
       </Box>
 
+      {/* TODO: 何人勝つかを入力できるようにする */}
+
       {/* Create Room Button */}
       <Box w="160px" mt="4">
         <Button
