@@ -1,14 +1,14 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { RpsHand, RPS_HAND_TYPE_LIST } from "../../../uiParts/RpsEmoji";
-import RpsHandCard from "./RpsHandCard";
+import ChooseHandCard from "./ChooseHandCard";
 
-type ChooseRpsHandProps = {
+type ChooseHandCardProps = {
   chosenHand?: RpsHand;
   chooseHand: (hand: RpsHand) => void;
 };
 
-export default function RpsHandCardList(
-  props: ChooseRpsHandProps
+export default function ChooseHandCardList(
+  props: ChooseHandCardProps
 ): JSX.Element {
   return (
     <Box my="4">
@@ -18,16 +18,16 @@ export default function RpsHandCardList(
       </Heading>
 
       {/* Choose Rps Hand */}
-      <Box mt="6" mb="4" display="flex" gap="12" alignItems="center">
+      <Flex mt="6" mb="4" gap="12" alignItems="center">
         {RPS_HAND_TYPE_LIST.map((hand) => (
-          <RpsHandCard
+          <ChooseHandCard
             key={hand}
             hand={hand}
             chosenHand={props.chosenHand}
             chooseHand={props.chooseHand}
           />
         ))}
-      </Box>
+      </Flex>
     </Box>
   );
 }

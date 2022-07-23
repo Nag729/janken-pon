@@ -2,7 +2,7 @@ import { useClickable } from "@chakra-ui/clickable";
 import { Box } from "@chakra-ui/react";
 import { createEmojiFromHand, RpsHand } from "../../../uiParts/RpsEmoji";
 
-type RpsHandCardProps = {
+type ChooseHandCardProps = {
   hand: RpsHand;
   chosenHand?: RpsHand;
   chooseHand: (hand: RpsHand) => void;
@@ -13,20 +13,20 @@ const Clickable = (props: any) => {
   return <Box {...clickable} />;
 };
 
-export default function RpsHandCard(props: RpsHandCardProps): JSX.Element {
-  const fontSize = "120px";
-  const disabledCommonStyle = {
+export default function ChooseHandCard(
+  props: ChooseHandCardProps
+): JSX.Element {
+  const disabledBaseStyle = {
     pointerEvents: "none",
   };
-
   const disabledStyle =
     props.hand === props.chosenHand
       ? {
-          ...disabledCommonStyle,
+          ...disabledBaseStyle,
           bg: "blue.600",
         }
       : {
-          ...disabledCommonStyle,
+          ...disabledBaseStyle,
           opacity: 0.4,
         };
 
@@ -38,13 +38,10 @@ export default function RpsHandCard(props: RpsHandCardProps): JSX.Element {
       rounded="xl"
       p="8"
       overflow="hidden"
-      fontSize={fontSize}
+      fontSize="120px"
       disabled={props.chosenHand !== undefined}
       onClick={() => props.chooseHand(props.hand)}
-      _hover={{
-        cursor: "pointer",
-        boxShadow: "md",
-      }}
+      _hover={{ cursor: "pointer", boxShadow: "md" }}
       _disabled={disabledStyle}
     >
       {createEmojiFromHand(props.hand)}

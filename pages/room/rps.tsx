@@ -1,20 +1,23 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { RpsHand } from "../../components/uiParts/RpsEmoji";
 import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
-import RpsHandCardList from "../../components/views/room/rps/RpsHandCardList";
+import RoundResult, {
+  UserHand,
+} from "../../components/views/room/rps/RoundResult";
+import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardList";
 import { GlobalContext } from "../../context/globalContext";
 import { SocketContext } from "../../context/socketContext";
 import styles from "../../styles/Home.module.css";
 
 type BattleResult = {
+  // FIXME: roundWinnerList に rename する
   winnerList: string[];
-  userHandList: {
-    userName: string;
-    hand: RpsHand;
-  }[];
+  userHandList: UserHand[];
 };
+
+type RoundStatus = `inBattle` | `settled`;
 
 const RpsRoom = () => {
   const router = useRouter();
@@ -30,26 +33,33 @@ const RpsRoom = () => {
   // userNameList
   const userNameList = state.userNameList;
 
+  // local state
   const [chosenHand, setChosenHand] = useState<RpsHand | undefined>(undefined);
   const [chosenUserNameList, setChosenUserNameList] = useState<string[]>([]);
+  const [roundStatus, setRoundStatus] = useState<RoundStatus>(`inBattle`);
+  const [winnerList, setWinnerList] = useState<string[]>([]);
+  const [userHandList, setUserHandList] = useState<UserHand[]>([]);
+
+  const isInBattle = useMemo(() => roundStatus === `inBattle`, [roundStatus]);
+  const isRoundSettled = useMemo(
+    () => roundStatus === `settled`,
+    [roundStatus]
+  );
 
   /**
    * Socket.IO
    */
   useEffect(() => {
     socket.on(`rps-hand-chosen`, (props: { userNameList: string[] }) => {
-      console.log(`*** rps-hand-chosen ***`);
-      console.log(props.userNameList);
       setChosenUserNameList([...props.userNameList]);
     });
 
     socket.on(
       `round-settled`,
       async (props: { battleResult: BattleResult }) => {
-        console.log(`*** round-settled ***`);
-        console.log(props.battleResult);
-
-        // TODO: battleResult を表示する!!
+        setRoundStatus(`settled`);
+        setWinnerList(props.battleResult.winnerList);
+        setUserHandList(props.battleResult.userHandList);
       }
     );
   }, []);
@@ -65,17 +75,31 @@ const RpsRoom = () => {
   return (
     <section className={styles.container}>
       <main className={styles.main}>
-        <Fragment>
-          {/* Rps Hand Cards */}
-          <RpsHandCardList chosenHand={chosenHand} chooseHand={chooseHand} />
+        {/* in battle */}
+        {isInBattle && (
+          <Fragment>
+            {/* Rps Hand Cards */}
+            <ChooseHandCardList
+              chosenHand={chosenHand}
+              chooseHand={chooseHand}
+            />
 
-          {/* Other User Status */}
-          <OtherUserBadgeList
-            myName={userName}
-            userNameList={userNameList}
-            chosenUserNameList={chosenUserNameList}
-          />
-        </Fragment>
+            {/* Other User Status */}
+            <OtherUserBadgeList
+              myName={userName}
+              userNameList={userNameList}
+              chosenUserNameList={chosenUserNameList}
+            />
+          </Fragment>
+        )}
+
+        {/* round settled */}
+        {isRoundSettled && (
+          <Fragment>
+            {/* Round Result */}
+            <RoundResult winnerList={winnerList} userHandList={userHandList} />
+          </Fragment>
+        )}
       </main>
     </section>
   );
