@@ -111,6 +111,9 @@ const RpsRoom = () => {
             )}
           </Fragment>
         )}
+
+        {/* next round */}
+        {/* TODO: 次のラウンドへ進むボタンを置く */}
       </main>
     </section>
   );
