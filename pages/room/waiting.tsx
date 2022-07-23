@@ -14,7 +14,7 @@ import {
 } from "../../helpers/copy-to-clipboard.helper";
 import {
   createRoomUrl,
-  NOT_EXIST_ROOM_TOAST_OPTIONS,
+  invalidRoomToastOptions,
   RPS_START_TOAST_OPTIONS,
 } from "../../helpers/rps-room/rps-room.helper";
 import { sleep } from "../../helpers/sleep.helper";
@@ -68,7 +68,7 @@ const WaitingRoom = () => {
     socket.once(`rps-started`, async () => {
       setWaitForStart(true);
       toast(RPS_START_TOAST_OPTIONS);
-      await sleep(1000);
+      await sleep(2000);
       router.push(`/room/rps?roomId=${roomId}`);
     });
   }, [router]);
@@ -82,9 +82,9 @@ const WaitingRoom = () => {
       return;
     }
 
-    const existRoom = await verifyRoomApi({ roomId });
-    if (!existRoom) {
-      toast(NOT_EXIST_ROOM_TOAST_OPTIONS);
+    const roomErrorList = await verifyRoomApi({ roomId });
+    if (roomErrorList.length > 0) {
+      toast(invalidRoomToastOptions(roomErrorList));
       await sleep(1000);
       router.push("/");
       return;

@@ -27,9 +27,13 @@ export const createNewRoomApi = async (body: {
     .catch((error: AxiosError) => Promise.reject(error.response?.data));
 };
 
+export type RoomError =
+  | `NOT_EXIST_ROOM`
+  | `ALREADY_STARTED_ROOM`
+  | `MAX_PLAYER`;
 export const verifyRoomApi = async (body: {
   roomId: string;
-}): Promise<boolean> => {
+}): Promise<RoomError[]> => {
   const response: AxiosResponse | undefined = await api
     .post(`/verify/room`, body)
     .catch((error: AxiosError) => Promise.reject(error.response?.data));

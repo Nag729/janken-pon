@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link } from "@chakra-ui/react";
 
 // ref: https://zenn.dev/knjname/articles/20210105tryoutchakraui
 export default function TheHeader(): JSX.Element {
@@ -16,7 +16,9 @@ export default function TheHeader(): JSX.Element {
     >
       <Box>
         <Heading size="lg" color="gray.700">
-          ✌️ Janken Pon
+          <Link href="/" style={{ textDecoration: "none" }}>
+            ✌️ Janken Pon
+          </Link>
         </Heading>
       </Box>
     </Flex>
