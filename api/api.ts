@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const baseURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || "";
+const baseURL: string = process.env.NEXT_PUBLIC_API_URL || "";
 const timeout: number = 100 * 1000;
 
 const api = axios.create({
