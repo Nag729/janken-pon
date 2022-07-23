@@ -12,7 +12,7 @@ import { SocketContext } from "../../context/socketContext";
 import styles from "../../styles/Home.module.css";
 import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 
-type BattleResult = {
+type RoundResult = {
   roundWinnerList: string[];
   userHandList: UserHand[];
 };
@@ -54,14 +54,11 @@ const RpsRoom = () => {
       setChosenUserNameList([...props.userNameList]);
     });
 
-    socket.on(
-      `round-settled`,
-      async (props: { battleResult: BattleResult }) => {
-        setRoundStatus(`settled`);
-        setRoundWinnerList(props.battleResult.roundWinnerList);
-        setUserHandList(props.battleResult.userHandList);
-      }
-    );
+    socket.on(`round-settled`, async (props: { roundResult: RoundResult }) => {
+      setRoundStatus(`settled`);
+      setRoundWinnerList(props.roundResult.roundWinnerList);
+      setUserHandList(props.roundResult.userHandList);
+    });
   }, []);
 
   /**
