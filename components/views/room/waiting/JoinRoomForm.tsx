@@ -14,12 +14,12 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
     <Box my="4">
       {/* Heading */}
       <Heading size="xl" my="4" textAlign="center" color="gray.700">
-        名前を入力 ✍
+        あなたの名前は？ 👀
       </Heading>
 
       <Flex w="100vw" my="2" flexDirection="column" alignItems="center">
         {/* User Name Input */}
-        <Box w="320px" my="2">
+        <Box w="240px" my="2">
           <Input
             colorScheme="blue"
             placeholder="名前を入力"

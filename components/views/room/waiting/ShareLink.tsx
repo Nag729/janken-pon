@@ -16,7 +16,7 @@ export default function ShareLink(props: ShareLinkProps): JSX.Element {
     >
       {/* Heading */}
       <Heading size="xl" textAlign="center" color="gray.700">
-        参加者にリンクを共有しよう 🙌
+        リンクを共有しよう 🙌
       </Heading>
 
       {/* Link for Copy */}

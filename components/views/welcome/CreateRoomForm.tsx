@@ -15,7 +15,7 @@ export default function CreateRoomForm(
   return (
     <Box w="100vw" display="flex" flexDirection="column" alignItems="center">
       {/* User Name Input */}
-      <Box w="280px" my="2">
+      <Box w="240px" my="2">
         <Input
           colorScheme="blue"
           placeholder="名前を入力"

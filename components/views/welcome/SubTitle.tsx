@@ -7,19 +7,19 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
     <Box my="4">
       <Heading
         size="lg"
-        my="4"
+        my="2"
         textAlign="center"
         color="blue.400"
-        letterSpacing="0.6rem"
+        letterSpacing="0.5rem"
       >
         オンラインで
       </Heading>
       <Heading
         size="lg"
-        my="4"
+        my="2"
         textAlign="center"
         color="blue.400"
-        letterSpacing="0.6rem"
+        letterSpacing="0.5rem"
       >
         じゃんけんしよう
       </Heading>
