@@ -59,6 +59,18 @@ const RpsRoom = () => {
       setRoundWinnerList(props.roundResult.roundWinnerList);
       setUserHandList(props.roundResult.userHandList);
     });
+
+    socket.on(
+      `rps-completed`,
+      async (props: {
+        roundResult: RoundResult;
+        winnerUserNameList: string[];
+      }) => {
+        console.log(`*** rps-completed ***`);
+        console.log(props.roundResult);
+        console.log(props.winnerUserNameList);
+      }
+    );
   }, []);
 
   /**
