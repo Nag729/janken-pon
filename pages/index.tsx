@@ -50,25 +50,23 @@ export default function Home() {
 
   return (
     <section className={styles.container}>
-      <main className={styles.main}>
-        {/* Emoji */}
-        <Box my="2">
-          <RpsEmoji fontSize="120px" />
-        </Box>
+      {/* Emoji */}
+      <Box my="2">
+        <RpsEmoji fontSize="120px" />
+      </Box>
 
-        {/* Main Title */}
-        <MainTitle />
+      {/* Main Title */}
+      <MainTitle />
 
-        {/* Sub Title */}
-        <SubTitle />
+      {/* Sub Title */}
+      <SubTitle />
 
-        {/* Create Room Form */}
-        <CreateRoomForm
-          userName={userName}
-          setUserName={setUserName}
-          createNewRoom={createNewRoom}
-        />
-      </main>
+      {/* Create Room Form */}
+      <CreateRoomForm
+        userName={userName}
+        setUserName={setUserName}
+        createNewRoom={createNewRoom}
+      />
     </section>
   );
 }

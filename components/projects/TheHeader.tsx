@@ -7,7 +7,7 @@ export default function TheHeader(): JSX.Element {
       as="header"
       position="fixed"
       top={0}
-      width="full"
+      w="100vw"
       bg="white"
       shadow="md"
       py={4}

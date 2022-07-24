@@ -26,7 +26,12 @@ export default function RoundSettledResult(
   return (
     <Box my="4">
       {/* Heading */}
-      <Flex flexDirection="row" alignItems="baseline" gap={4}>
+      <Flex
+        flexDirection="row"
+        alignItems="baseline"
+        justifyContent="center"
+        gap={4}
+      >
         <Heading size="xl">🎉</Heading>
         <Heading size="lg" color="gray.700">
           勝ったのは

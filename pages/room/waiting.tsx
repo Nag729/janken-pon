@@ -113,34 +113,32 @@ const WaitingRoom = () => {
 
   return (
     <section className={styles.container}>
-      <main className={styles.main}>
-        {!isUserReady && (
-          <JoinRoomForm
-            userName={userName}
-            setUserName={setUserName}
-            joinRoom={joinRoom}
+      {!isUserReady && (
+        <JoinRoomForm
+          userName={userName}
+          setUserName={setUserName}
+          joinRoom={joinRoom}
+        />
+      )}
+
+      {isUserReady && (
+        <Fragment>
+          {/* Share Link */}
+          <ShareLink onCopy={copyUrl} />
+
+          {/* Participants List */}
+          <ParticipantsList userNameList={userNameList} />
+
+          {/* TODO: 何人勝つかを入力できるようにする（ホストだけ） */}
+
+          {/* Janken Start Button */}
+          <StartRpsButton
+            userNameList={userNameList}
+            disabled={waitForStart}
+            onClick={startRps}
           />
-        )}
-
-        {isUserReady && (
-          <Fragment>
-            {/* Share Link */}
-            <ShareLink onCopy={copyUrl} />
-
-            {/* Participants List */}
-            <ParticipantsList userNameList={userNameList} />
-
-            {/* TODO: 何人勝つかを入力できるようにする（ホストだけ） */}
-
-            {/* Janken Start Button */}
-            <StartRpsButton
-              userNameList={userNameList}
-              disabled={waitForStart}
-              onClick={startRps}
-            />
-          </Fragment>
-        )}
-      </main>
+        </Fragment>
+      )}
     </section>
   );
 };

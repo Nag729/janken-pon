@@ -87,43 +87,38 @@ const RpsRoom = () => {
 
   return (
     <section className={styles.container}>
-      <main className={styles.main}>
-        {/* in battle */}
-        {isInBattle && (
-          <Fragment>
-            {/* Rps Hand Cards */}
-            <ChooseHandCardList
-              chosenHand={chosenHand}
-              chooseHand={chooseHand}
+      {/* in battle */}
+      {isInBattle && (
+        <Fragment>
+          {/* Rps Hand Cards */}
+          <ChooseHandCardList chosenHand={chosenHand} chooseHand={chooseHand} />
+
+          {/* Other User Status */}
+          <OtherUserBadgeList
+            myName={userName}
+            userNameList={userNameList}
+            chosenUserNameList={chosenUserNameList}
+          />
+        </Fragment>
+      )}
+
+      {/* round settled */}
+      {isRoundSettled && (
+        <Fragment>
+          {/* Round Result */}
+          {roundWinnerList.length > 0 ? (
+            <RoundSettledResult
+              roundWinnerList={roundWinnerList}
+              userHandList={userHandList}
             />
+          ) : (
+            <RoundDrawResult userHandList={userHandList} />
+          )}
+        </Fragment>
+      )}
 
-            {/* Other User Status */}
-            <OtherUserBadgeList
-              myName={userName}
-              userNameList={userNameList}
-              chosenUserNameList={chosenUserNameList}
-            />
-          </Fragment>
-        )}
-
-        {/* round settled */}
-        {isRoundSettled && (
-          <Fragment>
-            {/* Round Result */}
-            {roundWinnerList.length > 0 ? (
-              <RoundSettledResult
-                roundWinnerList={roundWinnerList}
-                userHandList={userHandList}
-              />
-            ) : (
-              <RoundDrawResult userHandList={userHandList} />
-            )}
-          </Fragment>
-        )}
-
-        {/* next round */}
-        {/* TODO: 次のラウンドへ進むボタンを置く */}
-      </main>
+      {/* next round */}
+      {/* TODO: 次のラウンドへ進むボタンを置く */}
     </section>
   );
 };
