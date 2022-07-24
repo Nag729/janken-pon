@@ -12,6 +12,13 @@ export default function CreateRoomForm(
 ): JSX.Element {
   const hasUserName: boolean = !!props.userName.length;
 
+  const pressEnterToCreateNewRoom = (
+    ev: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (ev.nativeEvent.isComposing || ev.key !== `Enter`) return;
+    props.createNewRoom();
+  };
+
   return (
     <Box w="100vw" display="flex" flexDirection="column" alignItems="center">
       {/* User Name Input */}
@@ -23,10 +30,9 @@ export default function CreateRoomForm(
           textAlign="center"
           value={props.userName}
           onChange={(event) => props.setUserName(event.target.value)}
+          onKeyDown={pressEnterToCreateNewRoom}
         />
       </Box>
-
-      {/* TODO: 何人勝つかを入力できるようにする */}
 
       {/* Create Room Button */}
       <Box w="160px" mt="4">

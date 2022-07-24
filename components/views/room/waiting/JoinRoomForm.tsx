@@ -10,6 +10,11 @@ type JoinRoomFormProps = {
 export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
   const hasUserName: boolean = !!props.userName.length;
 
+  const pressEnterToJoin = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+    if (ev.nativeEvent.isComposing || ev.key !== `Enter`) return;
+    props.joinRoom();
+  };
+
   return (
     <Box my="4">
       {/* Heading */}
@@ -27,6 +32,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
             textAlign="center"
             value={props.userName}
             onChange={(event) => props.setUserName(event.target.value)}
+            onKeyDown={pressEnterToJoin}
           />
         </Box>
 

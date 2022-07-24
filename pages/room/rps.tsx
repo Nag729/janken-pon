@@ -25,7 +25,7 @@ const RpsRoom = () => {
 
   const toast = useToast();
   const { socket } = useContext(SocketContext);
-  const { state, dispatch } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
 
   // userName
   const userName = state.userName;
@@ -69,6 +69,10 @@ const RpsRoom = () => {
         console.log(`*** rps-completed ***`);
         console.log(props.roundResult);
         console.log(props.winnerUserNameList);
+
+        setRoundStatus(`settled`);
+        setRoundWinnerList(props.roundResult.roundWinnerList);
+        setUserHandList(props.roundResult.userHandList);
       }
     );
   }, []);

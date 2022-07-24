@@ -90,8 +90,6 @@ const WaitingRoom = () => {
       return;
     }
 
-    // TODO: 部屋に人数が 8 人以上いるときは入れないようにする!!
-
     const isDuplicateName: boolean = await verifyUserNameApi({
       roomId,
       userName,
@@ -131,6 +129,8 @@ const WaitingRoom = () => {
 
             {/* Participants List */}
             <ParticipantsList userNameList={userNameList} />
+
+            {/* TODO: 何人勝つかを入力できるようにする（ホストだけ） */}
 
             {/* Janken Start Button */}
             <StartRpsButton
