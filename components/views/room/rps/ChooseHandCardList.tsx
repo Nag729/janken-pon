@@ -18,7 +18,13 @@ export default function ChooseHandCardList(
       </Heading>
 
       {/* Choose Rps Hand */}
-      <Flex mt="6" mb="4" gap="12" alignItems="center">
+      <Flex
+        my="4"
+        gap="8"
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
         {RPS_HAND_TYPE_LIST.map((hand) => (
           <ChooseHandCard
             key={hand}

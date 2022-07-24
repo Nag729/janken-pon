@@ -37,7 +37,6 @@ export default function ChooseHandCard(
       boxShadow="xl"
       rounded="xl"
       p="8"
-      overflow="hidden"
       fontSize="120px"
       disabled={props.chosenHand !== undefined}
       onClick={() => props.chooseHand(props.hand)}

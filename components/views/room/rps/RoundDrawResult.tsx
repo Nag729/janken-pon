@@ -22,7 +22,13 @@ export default function RoundDrawResult(
       </Heading>
 
       {/* User Hand List */}
-      <Flex my="8" gap={8} alignItems="center">
+      <Flex
+        my="8"
+        gap={8}
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
         {props.userHandList.map((userHand) => (
           <RoundResultCard
             key={userHand.userName}
