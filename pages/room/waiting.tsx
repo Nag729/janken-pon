@@ -1,11 +1,13 @@
-import { useToast } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { verifyRoomApi, verifyUserNameApi } from "../../api/api";
+import RpsEmoji from "../../components/uiParts/RpsEmoji";
 import JoinRoomForm from "../../components/views/room/waiting/JoinRoomForm";
 import ParticipantsList from "../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../components/views/room/waiting/ShareLink";
 import StartRpsButton from "../../components/views/room/waiting/StartRpsButton";
+import MainTitle from "../../components/views/welcome/MainTitle";
 import { GlobalContext } from "../../context/globalContext";
 import { SocketContext } from "../../context/socketContext";
 import {
@@ -47,7 +49,9 @@ const WaitingRoom = () => {
   };
 
   const [isUserReady, setIsUserReady] = useState<boolean>(state.isHost);
-  const [waitForStart, setWaitForStart] = useState<boolean>(false);
+
+  // numberOfWinners
+  const [numberOfWinners, setNumberOfWinners] = useState<number>(1);
 
   /**
    * Socket.IO
@@ -66,7 +70,6 @@ const WaitingRoom = () => {
     });
 
     socket.once(`rps-started`, async () => {
-      setWaitForStart(true);
       toast(RPS_START_TOAST_OPTIONS);
       await sleep(2000);
       router.push(`/room/rps?roomId=${roomId}`);
@@ -114,29 +117,48 @@ const WaitingRoom = () => {
   return (
     <section className={styles.container}>
       {!isUserReady && (
-        <JoinRoomForm
-          userName={userName}
-          setUserName={setUserName}
-          joinRoom={joinRoom}
-        />
+        <Fragment>
+          {/* Emoji */}
+          <Box my="2">
+            <RpsEmoji fontSize="120px" />
+          </Box>
+
+          {/* Main Title */}
+          <Box my="2">
+            <MainTitle />
+          </Box>
+
+          {/* Join Room Form */}
+          <Box mt="8">
+            <JoinRoomForm
+              userName={userName}
+              setUserName={setUserName}
+              joinRoom={joinRoom}
+            />
+          </Box>
+        </Fragment>
       )}
 
       {isUserReady && (
         <Fragment>
           {/* Share Link */}
-          <ShareLink onCopy={copyUrl} />
+          <Box mt="12" mb="8">
+            <ShareLink onCopy={copyUrl} />
+          </Box>
 
           {/* Participants List */}
-          <ParticipantsList userNameList={userNameList} />
-
-          {/* TODO: 何人勝つかを入力できるようにする（ホストだけ） */}
+          <Box my="6">
+            <ParticipantsList userNameList={userNameList} />
+          </Box>
 
           {/* Janken Start Button */}
-          <StartRpsButton
-            userNameList={userNameList}
-            disabled={waitForStart}
-            onClick={startRps}
-          />
+          <Box my="6">
+            <StartRpsButton
+              userNameList={userNameList}
+              disabled={!state.isHost}
+              onClick={startRps}
+            />
+          </Box>
         </Fragment>
       )}
     </section>

@@ -11,7 +11,7 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
         my="2"
         textAlign="center"
         color="blue.400"
-        letterSpacing="0.5rem"
+        letterSpacing="0.4rem"
       >
         オンラインで
       </Heading>
@@ -20,9 +20,9 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
         my="2"
         textAlign="center"
         color="blue.400"
-        letterSpacing="0.5rem"
+        letterSpacing="0.4rem"
       >
-        じゃんけんしよう
+        じゃんけんしよう！
       </Heading>
     </Fragment>
   );

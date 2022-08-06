@@ -1,4 +1,4 @@
-import { Heading, Box } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { Fragment } from "react";
 
@@ -19,16 +19,22 @@ export default function ParticipantsList(
   return (
     <Fragment>
       {/* Heading */}
-      <Heading size="xl" my="4" textAlign="center" color="gray.700">
+      <Heading size="xl" textAlign="center" color="gray.700">
         ただいまの参加者 👀
       </Heading>
 
       {/* Participants Badge */}
-      <Box my="2" display="flex" gap="4" alignItems="center">
+      <Flex
+        mt="6"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        gap="4"
+      >
         {props.userNameList.map((userName) => (
           <ParticipantBadge key={userName} userName={userName} />
         ))}
-      </Box>
+      </Flex>
     </Fragment>
   );
 }

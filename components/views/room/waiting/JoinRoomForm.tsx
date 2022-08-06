@@ -16,15 +16,20 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
   };
 
   return (
-    <Box my="4">
-      {/* Heading */}
-      <Heading size="xl" my="4" textAlign="center" color="gray.700">
-        あなたの名前は？ 👀
+    <Box>
+      {/* Sub Heading */}
+      <Heading
+        size="lg"
+        textAlign="center"
+        color="blue.400"
+        letterSpacing="0.2rem"
+      >
+        招待された部屋に参加しよう 🙌
       </Heading>
 
-      <Flex w="100vw" my="2" flexDirection="column" alignItems="center">
+      <Flex mt="12" flexDirection="column" alignItems="center">
         {/* User Name Input */}
-        <Box w="240px" my="2">
+        <Box>
           <Input
             colorScheme="blue"
             placeholder="名前を入力"
@@ -37,7 +42,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
         </Box>
 
         {/* Join Room Button */}
-        <Box w="160px" mt="8">
+        <Box mt="4">
           <Button
             rightIcon={<ArrowForwardIcon />}
             colorScheme="blue"
@@ -46,7 +51,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
             disabled={!hasUserName}
             onClick={props.joinRoom}
           >
-            参加する
+            じゃんけんに参加
           </Button>
         </Box>
       </Flex>

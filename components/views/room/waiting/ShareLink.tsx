@@ -1,5 +1,5 @@
 import { CopyIcon } from "@chakra-ui/icons";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading } from "@chakra-ui/react";
 
 type ShareLinkProps = {
   onCopy: () => void;
@@ -7,13 +7,7 @@ type ShareLinkProps = {
 
 export default function ShareLink(props: ShareLinkProps): JSX.Element {
   return (
-    <Box
-      my="12"
-      display="flex"
-      flexDirection="column"
-      gap="6"
-      alignItems="center"
-    >
+    <Flex flexDirection="column" alignItems="center" gap="6">
       {/* Heading */}
       <Heading size="xl" textAlign="center" color="gray.700">
         リンクを共有しよう 🙌
@@ -33,6 +27,6 @@ export default function ShareLink(props: ShareLinkProps): JSX.Element {
           共有リンクをコピー
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 }

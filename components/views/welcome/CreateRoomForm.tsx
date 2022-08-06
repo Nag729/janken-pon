@@ -35,7 +35,7 @@ export default function CreateRoomForm(
       </Box>
 
       {/* Create Room Button */}
-      <Box mt="6">
+      <Box mt="4">
         <Button
           rightIcon={<ArrowForwardIcon />}
           colorScheme="blue"

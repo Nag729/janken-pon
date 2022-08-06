@@ -11,19 +11,17 @@ const MINIMUM_PLAYER_NUMBER = 2;
 
 export default function StartRpsButton(props: StartRpsProps): JSX.Element {
   return (
-    <Box my="12">
-      <Button
-        rightIcon={<ArrowForwardIcon />}
-        colorScheme="blue"
-        size="lg"
-        width="100%"
-        disabled={
-          props.userNameList.length < MINIMUM_PLAYER_NUMBER || props.disabled
-        }
-        onClick={props.onClick}
-      >
-        このメンバーではじめる
-      </Button>
-    </Box>
+    <Button
+      rightIcon={<ArrowForwardIcon />}
+      colorScheme="blue"
+      size="lg"
+      width="100%"
+      disabled={
+        props.userNameList.length < MINIMUM_PLAYER_NUMBER || props.disabled
+      }
+      onClick={props.onClick}
+    >
+      このメンバーではじめる
+    </Button>
   );
 }
