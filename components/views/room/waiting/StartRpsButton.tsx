@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 type StartRpsProps = {
   userNameList: string[];
@@ -21,7 +21,7 @@ export default function StartRpsButton(props: StartRpsProps): JSX.Element {
       }
       onClick={props.onClick}
     >
-      このメンバーではじめる
+      じゃんけんを始める
     </Button>
   );
 }

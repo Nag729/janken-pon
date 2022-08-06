@@ -42,7 +42,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
         </Box>
 
         {/* Join Room Button */}
-        <Box mt="4">
+        <Box mt="6">
           <Button
             rightIcon={<ArrowForwardIcon />}
             colorScheme="blue"

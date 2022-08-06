@@ -4,6 +4,7 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { verifyRoomApi, verifyUserNameApi } from "../../api/api";
 import RpsEmoji from "../../components/uiParts/RpsEmoji";
 import JoinRoomForm from "../../components/views/room/waiting/JoinRoomForm";
+import NumberOfWinnersForm from "../../components/views/room/waiting/NumberOfWinnersForm";
 import ParticipantsList from "../../components/views/room/waiting/ParticipantsList";
 import ShareLink from "../../components/views/room/waiting/ShareLink";
 import StartRpsButton from "../../components/views/room/waiting/StartRpsButton";
@@ -51,6 +52,7 @@ const WaitingRoom = () => {
   const [isUserReady, setIsUserReady] = useState<boolean>(state.isHost);
 
   // numberOfWinners
+  // TODO: numberOfWinners が変更されたら他のユーザーに通知する
   const [numberOfWinners, setNumberOfWinners] = useState<number>(1);
 
   /**
@@ -142,7 +144,7 @@ const WaitingRoom = () => {
       {isUserReady && (
         <Fragment>
           {/* Share Link */}
-          <Box mt="12" mb="8">
+          <Box my="6">
             <ShareLink onCopy={copyUrl} />
           </Box>
 
@@ -151,8 +153,20 @@ const WaitingRoom = () => {
             <ParticipantsList userNameList={userNameList} />
           </Box>
 
+          {userNameList.length >= 2 && (
+            // Number of Winners
+            <Box my="6">
+              <NumberOfWinnersForm
+                isHost={state.isHost}
+                userCount={userNameList.length}
+                numberOfWinners={numberOfWinners}
+                setNumberOfWinners={setNumberOfWinners}
+              />
+            </Box>
+          )}
+
           {/* Janken Start Button */}
-          <Box my="6">
+          <Box my="8">
             <StartRpsButton
               userNameList={userNameList}
               disabled={!state.isHost}
