@@ -123,7 +123,7 @@ const WaitingRoom = () => {
   };
 
   const startRps = () => {
-    socket.emit(`start-rps`);
+    socket.emit(`start-rps`, { numberOfWinners });
   };
 
   return (
