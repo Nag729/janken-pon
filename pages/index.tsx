@@ -56,17 +56,23 @@ export default function Home() {
       </Box>
 
       {/* Main Title */}
-      <MainTitle />
+      <Box my="2">
+        <MainTitle />
+      </Box>
 
       {/* Sub Title */}
-      <SubTitle />
+      <Box my="4">
+        <SubTitle />
+      </Box>
 
       {/* Create Room Form */}
-      <CreateRoomForm
-        userName={userName}
-        setUserName={setUserName}
-        createNewRoom={createNewRoom}
-      />
+      <Box my="4">
+        <CreateRoomForm
+          userName={userName}
+          setUserName={setUserName}
+          createNewRoom={createNewRoom}
+        />
+      </Box>
     </section>
   );
 }

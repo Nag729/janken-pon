@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Input, Button } from "@chakra-ui/react";
+import { Box, Input, Button, Flex } from "@chakra-ui/react";
 
 type CreateRoomFormProps = {
   userName: string;
@@ -20,9 +20,9 @@ export default function CreateRoomForm(
   };
 
   return (
-    <Box w="100vw" display="flex" flexDirection="column" alignItems="center">
+    <Flex flexDirection="column" alignItems="center">
       {/* User Name Input */}
-      <Box w="240px" my="2">
+      <Box>
         <Input
           colorScheme="blue"
           placeholder="名前を入力"
@@ -35,7 +35,7 @@ export default function CreateRoomForm(
       </Box>
 
       {/* Create Room Button */}
-      <Box w="160px" mt="4">
+      <Box mt="6">
         <Button
           rightIcon={<ArrowForwardIcon />}
           colorScheme="blue"
@@ -47,6 +47,6 @@ export default function CreateRoomForm(
           部屋をつくる
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 }

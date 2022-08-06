@@ -1,10 +1,11 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
+import { Fragment } from "react";
 
 type SubTitleProps = {};
 
 export default function SubTitle(_: SubTitleProps): JSX.Element {
   return (
-    <Box my="4">
+    <Fragment>
       <Heading
         size="lg"
         my="2"
@@ -23,6 +24,6 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
       >
         じゃんけんしよう
       </Heading>
-    </Box>
+    </Fragment>
   );
 }
