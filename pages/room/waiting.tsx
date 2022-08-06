@@ -52,8 +52,11 @@ const WaitingRoom = () => {
   const [isUserReady, setIsUserReady] = useState<boolean>(state.isHost);
 
   // numberOfWinners
-  // TODO: numberOfWinners が変更されたら他のユーザーに通知する
   const [numberOfWinners, setNumberOfWinners] = useState<number>(1);
+  const updateNumberOfWinners = (numberOfWinners: number) => {
+    setNumberOfWinners(numberOfWinners); // for host
+    socket.emit(`update-number-of-winners`, { numberOfWinners });
+  };
 
   /**
    * Socket.IO
@@ -70,6 +73,13 @@ const WaitingRoom = () => {
     socket.on(`user-name-list-updated`, (props: { userNameList: string[] }) => {
       setUserNameList([...props.userNameList]);
     });
+
+    socket.on(
+      `number-of-winners-updated`,
+      (props: { numberOfWinners: number }) => {
+        !state.isHost && setNumberOfWinners(props.numberOfWinners);
+      }
+    );
 
     socket.once(`rps-started`, async () => {
       toast(RPS_START_TOAST_OPTIONS);
@@ -153,14 +163,14 @@ const WaitingRoom = () => {
             <ParticipantsList userNameList={userNameList} />
           </Box>
 
+          {/* Number of Winners */}
           {userNameList.length >= 2 && (
-            // Number of Winners
             <Box my="6">
               <NumberOfWinnersForm
                 isHost={state.isHost}
                 userCount={userNameList.length}
                 numberOfWinners={numberOfWinners}
-                setNumberOfWinners={setNumberOfWinners}
+                updateNumberOfWinners={updateNumberOfWinners}
               />
             </Box>
           )}

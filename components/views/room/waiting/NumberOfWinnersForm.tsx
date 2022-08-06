@@ -12,7 +12,7 @@ type NumberOfWinnersFormProps = {
   isHost: boolean;
   userCount: number;
   numberOfWinners: number;
-  setNumberOfWinners: (numberOfWinners: number) => void;
+  updateNumberOfWinners: (numberOfWinners: number) => void;
 };
 
 export default function NumberOfWinnersForm(
@@ -36,7 +36,7 @@ export default function NumberOfWinnersForm(
           max={maxNumberOfWinners}
           step={1}
           value={props.numberOfWinners}
-          onChange={(value) => props.setNumberOfWinners(value)}
+          onChange={(value) => props.updateNumberOfWinners(value)}
           isDisabled={!props.isHost || maxNumberOfWinners <= 1}
         >
           <SliderTrack>
