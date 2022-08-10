@@ -10,6 +10,7 @@ import TheHeader from "../components/projects/TheHeader";
 import { GlobalContextProvider } from "../context/globalContext";
 import { SocketProvider } from "../context/socketContext";
 import "../styles/globals.css";
+import styles from "../styles/Home.module.css";
 
 // events for NProgress
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -27,14 +28,16 @@ function App({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.ico" />
           </Head>
 
-          {/* Header */}
-          <TheHeader />
+          <section className={styles.container}>
+            {/* Header */}
+            <TheHeader />
 
-          {/* main component */}
-          <Component {...pageProps} />
+            {/* Main Component */}
+            <Component {...pageProps} />
 
-          {/* TheFooter */}
-          <TheFooter />
+            {/* TheFooter */}
+            <TheFooter />
+          </section>
         </ChakraProvider>
       </GlobalContextProvider>
     </SocketProvider>

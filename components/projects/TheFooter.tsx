@@ -1,25 +1,23 @@
 import { Flex, Link, Text } from "@chakra-ui/react";
 
-// TODO: Footer の位置を修正する
 export default function TheFooter(): JSX.Element {
   return (
     <Flex
       as="footer"
-      position="absolute"
-      bottom={0}
-      left={0}
-      mt={4}
+      mt="auto"
       w="100vw"
-      h="80px"
+      h="64px"
       justifyContent="center"
       alignItems="center"
       bg="#2D3748"
+      fontFamily="mono"
     >
       <Text color="white">
         Created by{" "}
         <Link color="teal.200" href="https://github.com/Nag729" isExternal>
-          Nag729 😎
-        </Link>
+          Nag729
+        </Link>{" "}
+        😎
       </Text>
     </Flex>
   );

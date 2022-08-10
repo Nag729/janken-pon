@@ -26,7 +26,6 @@ import {
   USER_NAME_DUPLICATE_TOAST_OPTIONS,
   USER_NAME_TOO_LONG_TOAST_OPTIONS,
 } from "../../helpers/user-name/user-name.helper";
-import styles from "../../styles/Home.module.css";
 
 const WaitingRoom = () => {
   const router = useRouter();
@@ -54,7 +53,7 @@ const WaitingRoom = () => {
   // numberOfWinners
   const [numberOfWinners, setNumberOfWinners] = useState<number>(1);
   const updateNumberOfWinners = (numberOfWinners: number) => {
-    setNumberOfWinners(numberOfWinners); // for host
+    setNumberOfWinners(numberOfWinners); // NOTE: for host
     socket.emit(`update-number-of-winners`, { numberOfWinners });
   };
 
@@ -77,6 +76,7 @@ const WaitingRoom = () => {
     socket.on(
       `number-of-winners-updated`,
       (props: { numberOfWinners: number }) => {
+        // NOTE: for guest
         !state.isHost && setNumberOfWinners(props.numberOfWinners);
       }
     );
@@ -127,11 +127,11 @@ const WaitingRoom = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <>
       {!isUserReady && (
         <Fragment>
           {/* Emoji */}
-          <Box my="2">
+          <Box mt="6" mb="2">
             <RpsEmoji fontSize="120px" />
           </Box>
 
@@ -154,18 +154,18 @@ const WaitingRoom = () => {
       {isUserReady && (
         <Fragment>
           {/* Share Link */}
-          <Box my="6">
+          <Box mt="12">
             <ShareLink onCopy={copyUrl} />
           </Box>
 
           {/* Participants List */}
-          <Box my="6">
+          <Box my="12">
             <ParticipantsList userNameList={userNameList} />
           </Box>
 
           {/* Number of Winners */}
           {userNameList.length >= 2 && (
-            <Box my="6">
+            <Box>
               <NumberOfWinnersForm
                 isHost={state.isHost}
                 userCount={userNameList.length}
@@ -176,7 +176,7 @@ const WaitingRoom = () => {
           )}
 
           {/* Janken Start Button */}
-          <Box my="8">
+          <Box my="12">
             <StartRpsButton
               userNameList={userNameList}
               disabled={!state.isHost}
@@ -185,7 +185,7 @@ const WaitingRoom = () => {
           </Box>
         </Fragment>
       )}
-    </section>
+    </>
   );
 };
 

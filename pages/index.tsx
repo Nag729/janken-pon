@@ -11,7 +11,6 @@ import {
   isUserNameTooLong,
   USER_NAME_TOO_LONG_TOAST_OPTIONS,
 } from "../helpers/user-name/user-name.helper";
-import styles from "../styles/Home.module.css";
 
 /**
  * NOTE: Suppress Warning:
@@ -49,7 +48,7 @@ export default function Home() {
   };
 
   return (
-    <section className={styles.container}>
+    <>
       {/* Emoji */}
       <Box my="2">
         <RpsEmoji fontSize="120px" />
@@ -73,6 +72,6 @@ export default function Home() {
           createNewRoom={createNewRoom}
         />
       </Box>
-    </section>
+    </>
   );
 }

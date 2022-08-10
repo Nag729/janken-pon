@@ -9,7 +9,6 @@ import RoundSettledResult, {
 import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardList";
 import { GlobalContext } from "../../context/globalContext";
 import { SocketContext } from "../../context/socketContext";
-import styles from "../../styles/Home.module.css";
 import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 
 type RoundResult = {
@@ -86,7 +85,7 @@ const RpsRoom = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <>
       {/* in battle */}
       {isInBattle && (
         <Fragment>
@@ -119,7 +118,7 @@ const RpsRoom = () => {
 
       {/* next round */}
       {/* TODO: 次のラウンドへ進むボタンを置く */}
-    </section>
+    </>
   );
 };
 
