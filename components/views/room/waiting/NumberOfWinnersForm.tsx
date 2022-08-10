@@ -6,7 +6,9 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Tooltip,
 } from "@chakra-ui/react";
+import React from "react";
 
 type NumberOfWinnersFormProps = {
   isHost: boolean;
@@ -28,25 +30,31 @@ export default function NumberOfWinnersForm(
       </Heading>
 
       {/* Number of Winners Input */}
-      <Flex mt="6" justifyContent="center" alignItems="center">
-        <Slider
-          flex="1"
-          defaultValue={1}
-          min={1}
-          max={maxNumberOfWinners}
-          step={1}
-          value={props.numberOfWinners}
-          onChange={(value) => props.updateNumberOfWinners(value)}
-          isDisabled={!props.isHost || maxNumberOfWinners <= 1}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb fontSize="md" boxSize="36px">
-            {props.numberOfWinners}
-          </SliderThumb>
-        </Slider>
-      </Flex>
+      <Tooltip
+        label="ホストに委ねましょう 🙏"
+        hasArrow
+        isDisabled={props.isHost}
+      >
+        <Flex mt="6" justifyContent="center" alignItems="center">
+          <Slider
+            flex="1"
+            defaultValue={1}
+            min={1}
+            max={maxNumberOfWinners}
+            step={1}
+            value={props.numberOfWinners}
+            onChange={(value) => props.updateNumberOfWinners(value)}
+            isDisabled={!props.isHost || maxNumberOfWinners <= 1}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb fontSize="md" boxSize="36px">
+              {props.numberOfWinners}
+            </SliderThumb>
+          </Slider>
+        </Flex>
+      </Tooltip>
     </Box>
   );
 }

@@ -176,10 +176,10 @@ const WaitingRoom = () => {
           )}
 
           {/* Janken Start Button */}
-          <Box my="12">
+          <Box my={userNameList.length >= 2 ? "12" : "2"}>
             <StartRpsButton
               userNameList={userNameList}
-              disabled={!state.isHost}
+              isHost={state.isHost}
               onClick={startRps}
             />
           </Box>
