@@ -8,7 +8,7 @@ import {
   SliderTrack,
   Tooltip,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 
 type NumberOfWinnersFormProps = {
   isHost: boolean;
@@ -20,7 +20,15 @@ type NumberOfWinnersFormProps = {
 export default function NumberOfWinnersForm(
   props: NumberOfWinnersFormProps
 ): JSX.Element {
-  const maxNumberOfWinners = Math.max(1, Math.min(props.userCount - 1, 8));
+  const maxNumberOfWinners = useMemo(() => {
+    return Math.max(1, Math.min(props.userCount - 1, 8));
+  }, [props.userCount]);
+
+  useEffect(() => {
+    if (props.numberOfWinners > maxNumberOfWinners) {
+      props.updateNumberOfWinners(maxNumberOfWinners);
+    }
+  }, [props.userCount]);
 
   return (
     <Box>
