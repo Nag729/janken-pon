@@ -41,7 +41,7 @@ const RpsRoom = () => {
   const [roundWinnerList, setRoundWinnerList] = useState<string[]>([]);
   const [userHandList, setUserHandList] = useState<UserHand[]>([]);
   const [winnerList, setWinnerList] = useState<string[]>([]);
-  // TODO: loserList もサーバーから受け取る
+  // TODO: loserList もサーバーから受け取る -> Winner, Loser はじゃんけんに参加できないようにする
 
   const [waitingNextRound, setWaitingNextRound] = useState<boolean>(false);
 
