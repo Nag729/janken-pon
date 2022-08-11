@@ -83,7 +83,7 @@ const WaitingRoom = () => {
 
     socket.once(`rps-started`, async () => {
       toast(RPS_START_TOAST_OPTIONS);
-      await sleep(2000);
+      await sleep(1000);
       router.push(`/room/rps?roomId=${roomId}`);
     });
   }, [router]);

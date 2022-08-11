@@ -9,21 +9,12 @@ type RoundRoundCardProps = {
 };
 
 export const RoundResultCard = (props: RoundRoundCardProps) => {
-  const calcCardProps = ({ isDraw, isWinner }: RoundRoundCardProps) => {
-    if (!!isDraw) {
-      // Draw
-      return { bg: "white", color: "gray.700", opacity: 1 };
-    }
-
-    if (!!isWinner) {
-      // Winner
-      return { bg: "blue.600", color: "white", opacity: 1 };
-    }
-
-    // Loser
-    return { bg: "white", color: "gray.500", opacity: 0.6 };
+  const calculateCardProps = ({ isDraw, isWinner }: RoundRoundCardProps) => {
+    if (!!isDraw) return { bg: "white", color: "gray.700", opacity: 1 };
+    if (!!isWinner) return { bg: "blue.600", color: "white", opacity: 1 };
+    return { bg: "white", color: "gray.500", opacity: 0.6 }; // Loser
   };
-  const { bg, color, opacity } = calcCardProps(props);
+  const { bg, color, opacity } = calculateCardProps(props);
 
   return (
     <Flex
@@ -31,7 +22,7 @@ export const RoundResultCard = (props: RoundRoundCardProps) => {
       alignItems="center"
       justifyContent="center"
       w="180px"
-      h="240px"
+      h="256px"
       bg={bg}
       opacity={opacity}
       boxShadow="xl"

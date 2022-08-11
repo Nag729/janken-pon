@@ -1,5 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
-import { Fragment } from "react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import ParticipantBadge from "../../../uiParts/ParticipantBadge";
 
 type OtherUserBadgeListProps = {
@@ -20,14 +19,14 @@ export default function OtherUserBadgeList(
   );
 
   return (
-    <Fragment>
+    <Box>
       {/* Heading */}
-      <Heading size="xl" my="4" textAlign="center" color="gray.700">
+      <Heading size="xl" textAlign="center" color="gray.700">
         ほかの参加者 👀
       </Heading>
 
       {/* User Badge */}
-      <Flex my="2" gap="4" alignItems="center">
+      <Flex mt="4" gap="4" alignItems="center" justifyContent="center">
         {otherUserNameList.map((userName) => (
           <ParticipantBadge
             key={userName}
@@ -36,6 +35,6 @@ export default function OtherUserBadgeList(
           />
         ))}
       </Flex>
-    </Fragment>
+    </Box>
   );
 }
