@@ -1,4 +1,5 @@
 import { Flex, Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export default function TheFooter(): JSX.Element {
   return (
@@ -11,14 +12,19 @@ export default function TheFooter(): JSX.Element {
       alignItems="center"
       bg="#2D3748"
       fontFamily="mono"
+      gap="4"
     >
       <Text color="white">
         Created by{" "}
         <Link color="teal.200" href="https://github.com/Nag729" isExternal>
-          Nag729
+          @Nag729
         </Link>{" "}
         😎
       </Text>
+      <Text color="white">|</Text>
+      <NextLink href="/about" passHref>
+        <Link color="teal.200">Janken Pon について</Link>
+      </NextLink>
     </Flex>
   );
 }
