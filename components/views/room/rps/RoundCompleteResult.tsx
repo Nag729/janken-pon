@@ -34,7 +34,7 @@ export default function RoundCompleteResult({
       {/* Heading */}
       <Flex my="8" alignItems="center" justifyContent="center">
         <Heading size="lg" color="gray.700">
-          最終結果
+          決着がついた！
         </Heading>
       </Flex>
 
