@@ -1,7 +1,8 @@
 import { Box, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { RpsHand } from "../../components/uiParts/RpsEmoji";
+import AlreadyFinishedMessage from "../../components/views/room/rps/AlreadyFinishedMessage";
 import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardList";
 import NextRoundButton from "../../components/views/room/rps/NextRoundButton";
 import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
@@ -22,7 +23,8 @@ type RoundResult = {
 
 type RpsBattleResult = {
   roundResult: RoundResult;
-  winnerUserNameList: string[];
+  winnerNameList: string[];
+  loserNameList: string[];
 };
 
 type RpsStatus = `inBattle` | `roundSettled` | `completed`;
@@ -37,15 +39,28 @@ const RpsRoom = () => {
   const userName = state.userName;
   const userNameList = state.userNameList;
 
-  // local state
+  // rps status
   const [rpsStatus, setRpsStatus] = useState<RpsStatus>(`inBattle`);
+
+  // rps hand
   const [chosenHand, setChosenHand] = useState<RpsHand | undefined>(undefined);
   const [chosenUserNameList, setChosenUserNameList] = useState<string[]>([]);
+
+  // round result
   const [roundWinnerList, setRoundWinnerList] = useState<string[]>([]);
   const [userHandList, setUserHandList] = useState<UserHand[]>([]);
-  const [winnerList, setWinnerList] = useState<string[]>([]);
-  // TODO: loserList もサーバーから受け取る -> Winner, Loser はじゃんけんに参加できないようにする
 
+  // Winner or Loser
+  const [winnerList, setWinnerList] = useState<string[]>([]);
+  const [loserList, setLoserList] = useState<string[]>([]);
+  const winnerOrLoserList = useMemo(() => {
+    return [...winnerList, ...loserList];
+  }, [winnerList, loserList]);
+  const isFighting = useMemo(() => {
+    return !winnerOrLoserList.includes(userName);
+  }, [winnerOrLoserList, userName]);
+
+  // waiting flag
   const [waitingNextRound, setWaitingNextRound] = useState<boolean>(false);
 
   /**
@@ -71,7 +86,8 @@ const RpsRoom = () => {
   const setBattleResult = (result: RpsBattleResult) => {
     setRoundWinnerList(result.roundResult.roundWinnerList);
     setUserHandList(result.roundResult.userHandList);
-    setWinnerList(result.winnerUserNameList);
+    setWinnerList(result.winnerNameList);
+    setLoserList(result.loserNameList);
   };
 
   const resetBattleState = () => {
@@ -112,15 +128,26 @@ const RpsRoom = () => {
       {/* In Battle */}
       {rpsStatus === `inBattle` && (
         <Box my="8">
-          {/* Rps Hand Cards */}
-          <ChooseHandCardList chosenHand={chosenHand} chooseHand={chooseHand} />
+          <Box my="8">
+            {isFighting ? (
+              // Rps Hand Cards
+              <ChooseHandCardList
+                chosenHand={chosenHand}
+                chooseHand={chooseHand}
+              />
+            ) : (
+              // Already Finished Message
+              <AlreadyFinishedMessage isWin={!!winnerList.includes(userName)} />
+            )}
+          </Box>
 
           {/* Other User Status */}
-          <Box my="8">
+          <Box my="12">
             <OtherUserBadgeList
               myName={userName}
               userNameList={userNameList}
               chosenUserNameList={chosenUserNameList}
+              winnerOrLoserList={winnerOrLoserList}
             />
           </Box>
         </Box>
@@ -131,6 +158,7 @@ const RpsRoom = () => {
         <Box my="8">
           {/* Round Result */}
           {roundWinnerList.length > 0 ? (
+            // TODO: winner, loser をリストに入れる
             <RoundSettledResult
               roundWinnerList={roundWinnerList}
               userHandList={userHandList}

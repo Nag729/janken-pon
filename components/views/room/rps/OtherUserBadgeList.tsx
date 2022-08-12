@@ -5,15 +5,19 @@ type OtherUserBadgeListProps = {
   myName: string;
   userNameList: string[];
   chosenUserNameList: string[];
+  winnerOrLoserList: string[];
 };
 
-export default function OtherUserBadgeList(
-  props: OtherUserBadgeListProps
-): JSX.Element {
-  const { myName, userNameList, chosenUserNameList } = props;
-  const otherUserNameList = userNameList.filter(
-    (userName) => userName !== myName
-  );
+export default function OtherUserBadgeList({
+  myName,
+  userNameList,
+  chosenUserNameList,
+  winnerOrLoserList,
+}: OtherUserBadgeListProps): JSX.Element {
+  const otherUserNameList = userNameList
+    .filter((userName) => userName !== myName)
+    .filter((userName) => !winnerOrLoserList.includes(userName));
+
   const chosenUserNameListWithoutMe = chosenUserNameList.filter(
     (userName) => userName !== myName
   );
@@ -26,7 +30,7 @@ export default function OtherUserBadgeList(
       </Heading>
 
       {/* User Badge */}
-      <Flex mt="4" gap="4" alignItems="center" justifyContent="center">
+      <Flex mt="6" gap="4" alignItems="center" justifyContent="center">
         {otherUserNameList.map((userName) => (
           <ParticipantBadge
             key={userName}
