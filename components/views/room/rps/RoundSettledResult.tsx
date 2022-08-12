@@ -1,5 +1,4 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { useMemo } from "react";
 import { RpsHand } from "../../../uiParts/RpsEmoji";
 import { RoundResultCard } from "./RoundResultCard";
 
@@ -9,19 +8,28 @@ export type UserHand = {
 };
 
 type RoundSettledResultProps = {
+  userNameList: string[];
   roundWinnerList: string[];
   userHandList: UserHand[];
+  winnerList: string[];
+  loserList: string[];
 };
 
-export default function RoundSettledResult(
-  props: RoundSettledResultProps
-): JSX.Element {
-  const newWinners = useMemo(
-    () => props.roundWinnerList.join(", "),
-    [props.roundWinnerList]
-  );
-  const isNewWinner = (userName: string) =>
-    props.roundWinnerList.includes(userName);
+export default function RoundSettledResult({
+  userNameList,
+  roundWinnerList,
+  userHandList,
+  winnerList,
+  loserList,
+}: RoundSettledResultProps): JSX.Element {
+  const winOrLose = (userName: string): `win` | `lose` | undefined => {
+    if (winnerList.includes(userName)) return `win`;
+    if (loserList.includes(userName)) return `lose`;
+    return undefined;
+  };
+  const findRpsHand = (userName: string): RpsHand | undefined => {
+    return userHandList.find(({ userName: name }) => name === userName)?.hand;
+  };
 
   return (
     <Box my="4">
@@ -34,22 +42,22 @@ export default function RoundSettledResult(
       >
         <Heading size="xl">🎉</Heading>
         <Heading size="lg" color="gray.700">
-          勝ったのは
+          このラウンドで勝ったのは
         </Heading>
         <Heading size="2xl" color="blue.500">
-          {newWinners}
+          {roundWinnerList.join(", ")}
         </Heading>
         <Heading size="xl">🎉</Heading>
       </Flex>
 
       {/* User Hand List */}
       <Flex my="8" gap={8} alignItems="center">
-        {props.userHandList.map((userHand) => (
+        {userNameList.map((userName) => (
           <RoundResultCard
-            key={userHand.userName}
-            userName={userHand.userName}
-            hand={userHand.hand}
-            isWinner={isNewWinner(userHand.userName)}
+            key={userName}
+            userName={userName}
+            hand={findRpsHand(userName)}
+            winOrLose={winOrLose(userName)}
           />
         ))}
       </Flex>

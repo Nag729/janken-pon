@@ -7,6 +7,7 @@ import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardLi
 import NextRoundButton from "../../components/views/room/rps/NextRoundButton";
 import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
 import ReturnToTopButton from "../../components/views/room/rps/ReturnToTopButton";
+import RoundCompleteResult from "../../components/views/room/rps/RoundCompleteResult";
 import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 import RoundSettledResult, {
   UserHand,
@@ -16,15 +17,11 @@ import { SocketContext } from "../../context/socketContext";
 import { RPS_NEXT_ROUND_TOAST_OPTIONS } from "../../helpers/rps-room/rps-room.helper";
 import { sleep } from "../../helpers/sleep.helper";
 
-type RoundResult = {
+type RpsBattleResult = {
   roundWinnerList: string[];
   userHandList: UserHand[];
-};
-
-type RpsBattleResult = {
-  roundResult: RoundResult;
-  winnerNameList: string[];
-  loserNameList: string[];
+  winnerList: string[];
+  loserList: string[];
 };
 
 type RpsStatus = `inBattle` | `roundSettled` | `completed`;
@@ -47,18 +44,22 @@ const RpsRoom = () => {
   const [chosenUserNameList, setChosenUserNameList] = useState<string[]>([]);
 
   // round result
-  const [roundWinnerList, setRoundWinnerList] = useState<string[]>([]);
+  const [isDraw, setIsDraw] = useState<boolean>(false);
   const [userHandList, setUserHandList] = useState<UserHand[]>([]);
 
   // Winner or Loser
+  const [roundWinnerList, setRoundWinnerList] = useState<string[]>([]);
   const [winnerList, setWinnerList] = useState<string[]>([]);
   const [loserList, setLoserList] = useState<string[]>([]);
-  const winnerOrLoserList = useMemo(() => {
-    return [...winnerList, ...loserList];
-  }, [winnerList, loserList]);
-  const isFighting = useMemo(() => {
-    return !winnerOrLoserList.includes(userName);
-  }, [winnerOrLoserList, userName]);
+
+  const winnerOrLoserList = useMemo(
+    () => [...winnerList, ...loserList],
+    [winnerList, loserList]
+  );
+  const isFighting = useMemo(
+    () => !winnerOrLoserList.includes(userName),
+    [winnerOrLoserList, userName]
+  );
 
   // waiting flag
   const [waitingNextRound, setWaitingNextRound] = useState<boolean>(false);
@@ -84,15 +85,17 @@ const RpsRoom = () => {
    * Socket.IO
    */
   const setBattleResult = (result: RpsBattleResult) => {
-    setRoundWinnerList(result.roundResult.roundWinnerList);
-    setUserHandList(result.roundResult.userHandList);
-    setWinnerList(result.winnerNameList);
-    setLoserList(result.loserNameList);
+    setIsDraw(result.roundWinnerList.length === 0);
+    setRoundWinnerList(result.roundWinnerList);
+    setUserHandList(result.userHandList);
+    setWinnerList(result.winnerList);
+    setLoserList(result.loserList);
   };
 
   const resetBattleState = () => {
     setChosenHand(undefined);
     setChosenUserNameList([]);
+    setIsDraw(false);
     setRoundWinnerList([]);
     setUserHandList([]);
   };
@@ -156,15 +159,22 @@ const RpsRoom = () => {
       {/* Round Settled */}
       {rpsStatus === `roundSettled` && (
         <Box my="8">
-          {/* Round Result */}
-          {roundWinnerList.length > 0 ? (
-            // TODO: winner, loser をリストに入れる
+          {/* Round Settled Result */}
+          {!isDraw ? (
             <RoundSettledResult
+              userNameList={userNameList}
               roundWinnerList={roundWinnerList}
               userHandList={userHandList}
+              winnerList={winnerList}
+              loserList={loserList}
             />
           ) : (
-            <RoundDrawResult userHandList={userHandList} />
+            <RoundDrawResult
+              userNameList={userNameList}
+              userHandList={userHandList}
+              winnerList={winnerList}
+              loserList={loserList}
+            />
           )}
 
           {/* Next Round Button */}
@@ -180,10 +190,12 @@ const RpsRoom = () => {
       {/* Completed */}
       {rpsStatus === `completed` && (
         <Box my="8">
-          {/* Round Result */}
-          <RoundSettledResult
-            roundWinnerList={roundWinnerList}
+          {/* Round Complete Result */}
+          <RoundCompleteResult
+            userNameList={userNameList}
             userHandList={userHandList}
+            winnerList={winnerList}
+            loserList={loserList}
           />
 
           {/* Return to Top Button */}

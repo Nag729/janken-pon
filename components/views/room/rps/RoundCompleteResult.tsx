@@ -7,19 +7,19 @@ export type UserHand = {
   hand: RpsHand;
 };
 
-type RoundDrawResultProps = {
+type RoundCompleteResultProps = {
   userNameList: string[];
   userHandList: UserHand[];
   winnerList: string[];
   loserList: string[];
 };
 
-export default function RoundDrawResult({
+export default function RoundCompleteResult({
   userNameList,
   userHandList,
   winnerList,
   loserList,
-}: RoundDrawResultProps): JSX.Element {
+}: RoundCompleteResultProps): JSX.Element {
   const winOrLose = (userName: string): `win` | `lose` | undefined => {
     if (winnerList.includes(userName)) return `win`;
     if (loserList.includes(userName)) return `lose`;
@@ -32,18 +32,30 @@ export default function RoundDrawResult({
   return (
     <Box my="4">
       {/* Heading */}
-      <Heading size="2xl" color="gray.700" textAlign="center">
-        あいこ！
-      </Heading>
+      <Flex my="8" alignItems="center" justifyContent="center">
+        <Heading size="lg" color="gray.700">
+          最終結果
+        </Heading>
+      </Flex>
+
+      <Flex
+        flexDirection="row"
+        alignItems="baseline"
+        justifyContent="center"
+        gap={4}
+      >
+        <Heading size="xl">🎉</Heading>
+        <Heading size="lg" color="gray.700">
+          勝ったのは
+        </Heading>
+        <Heading size="2xl" color="blue.500">
+          {winnerList.join(", ")}
+        </Heading>
+        <Heading size="xl">🎉</Heading>
+      </Flex>
 
       {/* User Hand List */}
-      <Flex
-        my="8"
-        gap={8}
-        alignItems="center"
-        justifyContent="center"
-        flexWrap="wrap"
-      >
+      <Flex my="8" gap={8} alignItems="center">
         {userNameList.map((userName) => (
           <RoundResultCard
             key={userName}

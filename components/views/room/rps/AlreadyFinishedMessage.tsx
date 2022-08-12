@@ -20,12 +20,12 @@ export default function AlreadyFinishedMessage(
         </Heading>
         <Heading size="lg" textAlign="center" color={color}>
           が決定しています{` `}
-          {props.isWin ? `🥰` : `🥲`}
+          {props.isWin ? `😎` : `🥲`}
         </Heading>
       </Flex>
 
       <Heading size="lg" mt="6" textAlign="center" color={color}>
-        じゃんけんが終わるまで待ちましょう 😎
+        決着がつくまで待ちましょう 🙏
       </Heading>
     </Box>
   );
