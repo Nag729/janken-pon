@@ -24,7 +24,7 @@ function App({ Component, pageProps }: AppProps) {
         <ChakraProvider>
           {/* Head */}
           <Head>
-            <title>Janken Pon ✌️</title>
+            <title>Janken Pon ✌️ | オンラインでじゃんけん</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
 
