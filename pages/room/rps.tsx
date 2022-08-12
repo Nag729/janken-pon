@@ -1,9 +1,11 @@
 import { Box, useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { RpsHand } from "../../components/uiParts/RpsEmoji";
 import ChooseHandCardList from "../../components/views/room/rps/ChooseHandCardList";
 import NextRoundButton from "../../components/views/room/rps/NextRoundButton";
 import OtherUserBadgeList from "../../components/views/room/rps/OtherUserBadgeList";
+import ReturnToTopButton from "../../components/views/room/rps/ReturnToTopButton";
 import RoundDrawResult from "../../components/views/room/rps/RoundDrawResult";
 import RoundSettledResult, {
   UserHand,
@@ -26,6 +28,7 @@ type RpsBattleResult = {
 type RpsStatus = `inBattle` | `roundSettled` | `completed`;
 
 const RpsRoom = () => {
+  const router = useRouter();
   const toast = useToast();
   const { socket } = useContext(SocketContext);
   const { state } = useContext(GlobalContext);
@@ -56,6 +59,10 @@ const RpsRoom = () => {
   const enterNextRound = () => {
     setWaitingNextRound(true);
     socket.emit(`enter-next-round`);
+  };
+
+  const returnToTop = () => {
+    router.push(`/`);
   };
 
   /**
@@ -145,12 +152,16 @@ const RpsRoom = () => {
       {/* Completed */}
       {rpsStatus === `completed` && (
         <Box my="8">
-          {/* TODO: 終了画面を検討する!! */}
           {/* Round Result */}
           <RoundSettledResult
             roundWinnerList={roundWinnerList}
             userHandList={userHandList}
           />
+
+          {/* Return to Top Button */}
+          <Box my="12">
+            <ReturnToTopButton onClick={returnToTop} />
+          </Box>
         </Box>
       )}
     </>
