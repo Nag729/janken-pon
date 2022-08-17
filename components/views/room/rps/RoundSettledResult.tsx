@@ -40,14 +40,18 @@ export default function RoundSettledResult({
         justifyContent="center"
         gap={4}
       >
-        <Heading size="xl">🎉</Heading>
-        <Heading size="lg" color="gray.700">
+        <Heading as="h2" size="xl">
+          🎉
+        </Heading>
+        <Heading as="h2" size="lg" color="gray.700">
           このラウンドで勝ったのは
         </Heading>
-        <Heading size="2xl" color="blue.500">
+        <Heading as="h2" size="2xl" color="blue.500">
           {roundWinnerList.join(", ")}
         </Heading>
-        <Heading size="xl">🎉</Heading>
+        <Heading as="h2" size="xl">
+          🎉
+        </Heading>
       </Flex>
 
       {/* User Hand List */}

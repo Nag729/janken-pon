@@ -19,6 +19,7 @@ export default function JoinRoomForm(props: JoinRoomFormProps): JSX.Element {
     <Box>
       {/* Sub Heading */}
       <Heading
+        as="h2"
         size="lg"
         textAlign="center"
         color="blue.400"

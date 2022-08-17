@@ -19,7 +19,7 @@ export default function ParticipantsList(
   return (
     <Fragment>
       {/* Heading */}
-      <Heading size="xl" textAlign="center" color="gray.700">
+      <Heading as="h2" size="xl" textAlign="center" color="gray.700">
         ただいまの参加者 👀
       </Heading>
 
