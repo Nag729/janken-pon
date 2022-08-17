@@ -1,4 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import Router from "next/router";
@@ -42,6 +43,31 @@ function App({ Component, pageProps }: AppProps) {
             <title>Janken Pon ✌️ | オンラインでじゃんけん</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
+          <DefaultSeo
+            defaultTitle="Janken Pon | オンラインでじゃんけん"
+            description="オンラインでリアルタイムじゃんけんができるアプリ！"
+            openGraph={{
+              type: "website",
+              title: "Janken Pon | オンラインでじゃんけん",
+              description: "オンラインでリアルタイムじゃんけんができるアプリ！",
+              site_name: "Janken Pon",
+              url: "https://janken-pon.vercel.app/",
+              images: [
+                {
+                  url: "https://2.bp.blogspot.com/-R9fygJI7KIQ/Uab3zOD7QYI/AAAAAAAAUVM/9yTg0fPAsYo/s500/janken_boys.png",
+                  width: 500,
+                  height: 307,
+                  alt: "janken boys",
+                  type: "image/png",
+                },
+              ],
+            }}
+            twitter={{
+              handle: "@handle",
+              site: "@site",
+              cardType: "summary_large_image",
+            }}
+          />
 
           <section className={styles.container}>
             {/* Header */}

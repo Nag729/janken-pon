@@ -4,7 +4,7 @@ import { NEXT_PUBLIC_GOOGLE_ANALYTICS_ID } from "../lib/gtag";
 class EntendedDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="ja">
         <Head>
           {NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
             <>
