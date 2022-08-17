@@ -55,7 +55,7 @@ export default function About() {
     <>
       {/* About This Site */}
       <Flex flexDirection="column" alignItems="center">
-        {createHeader(`Janken Pon について`)}
+        {createHeader(`Janken Pon! について`)}
         {createText(`リアルタイムなオンラインじゃんけんができます`)}
         {createText(`ちょっとした決め事などにつかっていただけると嬉しいです`)}
       </Flex>

@@ -17,7 +17,7 @@ export default function TheHeader(): JSX.Element {
       <Box>
         <Heading as="h1" size="lg" color="gray.700">
           <Link href="/" style={{ textDecoration: "none" }}>
-            ✌️ Janken Pon
+            ✌️ Janken Pon!
           </Link>
         </Heading>
       </Box>

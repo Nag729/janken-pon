@@ -40,17 +40,17 @@ function App({ Component, pageProps }: AppProps) {
         <ChakraProvider>
           {/* Head */}
           <Head>
-            <title>Janken Pon ✌️ | オンラインでじゃんけん</title>
+            <title>Janken Pon! ✌️ | オンラインでじゃんけん</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <DefaultSeo
-            defaultTitle="Janken Pon | オンラインでじゃんけん"
+            defaultTitle="Janken Pon! | オンラインでじゃんけん"
             description="オンラインでリアルタイムじゃんけんができるアプリ！"
             openGraph={{
               type: "website",
-              title: "Janken Pon | オンラインでじゃんけん",
+              title: "Janken Pon! | オンラインでじゃんけん",
               description: "オンラインでリアルタイムじゃんけんができるアプリ！",
-              site_name: "Janken Pon",
+              site_name: "Janken Pon!",
               url: "https://janken-pon.vercel.app/",
               images: [
                 {
