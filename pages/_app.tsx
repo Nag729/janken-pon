@@ -9,6 +9,7 @@ import TheFooter from "../components/projects/TheFooter";
 import TheHeader from "../components/projects/TheHeader";
 import { GlobalContextProvider } from "../context/globalContext";
 import { SocketProvider } from "../context/socketContext";
+import { NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, pageview } from "../lib/gtag";
 import "../styles/globals.css";
 import styles from "../styles/Home.module.css";
 
@@ -18,6 +19,20 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function App({ Component, pageProps }: AppProps) {
+  // Google Analytics
+  React.useEffect(() => {
+    if (!NEXT_PUBLIC_GOOGLE_ANALYTICS_ID) {
+      return;
+    }
+    const handleRouteChange = (url: string) => {
+      pageview(url);
+    };
+    Router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      Router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [Router.events]);
+
   return (
     <SocketProvider>
       <GlobalContextProvider>
