@@ -54,9 +54,9 @@ function App({ Component, pageProps }: AppProps) {
               url: "https://janken-pon.vercel.app/",
               images: [
                 {
-                  url: "https://2.bp.blogspot.com/-R9fygJI7KIQ/Uab3zOD7QYI/AAAAAAAAUVM/9yTg0fPAsYo/s500/janken_boys.png",
-                  width: 500,
-                  height: 307,
+                  url: "https://drive.google.com/file/d/1ivHWDSgdSLC0f2WiI_EMYGics8mstERh/view?usp=sharing",
+                  width: 1200,
+                  height: 630,
                   alt: "janken boys",
                   type: "image/png",
                 },
