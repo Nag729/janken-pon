@@ -32,7 +32,7 @@ export default function RoundDrawResult({
   return (
     <Box my="4">
       {/* Heading */}
-      <Heading size="2xl" color="gray.700" textAlign="center">
+      <Heading as="h2" size="2xl" color="gray.700" textAlign="center">
         あいこ！
       </Heading>
 

@@ -12,7 +12,14 @@ import {
 export default function About() {
   const createHeader = (text: string) => {
     return (
-      <Heading size="xl" mt="12" mb="4" textAlign="center" color="blue.500">
+      <Heading
+        as="h1"
+        size="xl"
+        mt="12"
+        mb="4"
+        textAlign="center"
+        color="blue.500"
+      >
         {text}
       </Heading>
     );
@@ -48,11 +55,9 @@ export default function About() {
     <>
       {/* About This Site */}
       <Flex flexDirection="column" alignItems="center">
-        {createHeader(`Janken Pon について`)}
+        {createHeader(`Janken Pon! について`)}
         {createText(`リアルタイムなオンラインじゃんけんができます`)}
-        {createText(
-          `リモートワークのちょっとした決め事などにつかっていただけると嬉しいです`
-        )}
+        {createText(`ちょっとした決め事などにつかっていただけると嬉しいです`)}
       </Flex>
 
       {/* About Developer */}
@@ -75,7 +80,7 @@ export default function About() {
         <List mt="8" spacing={4}>
           <ListItem fontSize="lg">
             <ListIcon as={CheckCircleIcon} color="teal.500" />
-            言語は全て
+            言語は
             {createExternalLink({
               text: `TypeScript`,
               href: `https://www.typescriptlang.org/`,

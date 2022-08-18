@@ -15,9 +15,9 @@ export default function TheHeader(): JSX.Element {
       zIndex={9}
     >
       <Box>
-        <Heading size="lg" color="gray.700">
+        <Heading as="h1" size="lg" color="gray.700">
           <Link href="/" style={{ textDecoration: "none" }}>
-            ✌️ Janken Pon
+            ✌️ Janken Pon!
           </Link>
         </Heading>
       </Box>

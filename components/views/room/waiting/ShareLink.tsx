@@ -9,7 +9,7 @@ export default function ShareLink(props: ShareLinkProps): JSX.Element {
   return (
     <Flex flexDirection="column" alignItems="center" gap="6">
       {/* Heading */}
-      <Heading size="xl" textAlign="center" color="gray.700">
+      <Heading as="h2" size="xl" textAlign="center" color="gray.700">
         リンクを共有しよう 🙌
       </Heading>
 

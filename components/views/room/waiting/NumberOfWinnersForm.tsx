@@ -33,7 +33,7 @@ export default function NumberOfWinnersForm(
   return (
     <Box>
       {/* Heading */}
-      <Heading size="xl" textAlign="center" color="gray.700">
+      <Heading as="h2" size="xl" textAlign="center" color="gray.700">
         勝つ人数は？ 🤔
       </Heading>
 

@@ -13,7 +13,7 @@ export default function ChooseHandCardList(
   return (
     <Box my="4">
       {/* Heading */}
-      <Heading size="xl" my="4" textAlign="center" color="gray.700">
+      <Heading as="h1" size="xl" my="4" textAlign="center" color="gray.700">
         どの手を出す？ 🤔
       </Heading>
 

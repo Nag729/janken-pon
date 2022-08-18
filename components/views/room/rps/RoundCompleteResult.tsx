@@ -33,7 +33,7 @@ export default function RoundCompleteResult({
     <Box my="4">
       {/* Heading */}
       <Flex my="8" alignItems="center" justifyContent="center">
-        <Heading size="lg" color="gray.700">
+        <Heading as="h2" size="lg" color="gray.700">
           決着がついた！
         </Heading>
       </Flex>
@@ -44,14 +44,18 @@ export default function RoundCompleteResult({
         justifyContent="center"
         gap={4}
       >
-        <Heading size="xl">🎉</Heading>
-        <Heading size="lg" color="gray.700">
+        <Heading as="h2" size="xl">
+          🎉
+        </Heading>
+        <Heading as="h2" size="lg" color="gray.700">
           勝ったのは
         </Heading>
-        <Heading size="2xl" color="blue.500">
+        <Heading as="h2" size="2xl" color="blue.500">
           {winnerList.join(", ")}
         </Heading>
-        <Heading size="xl">🎉</Heading>
+        <Heading as="h2" size="xl">
+          🎉
+        </Heading>
       </Flex>
 
       {/* User Hand List */}

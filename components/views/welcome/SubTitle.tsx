@@ -7,6 +7,7 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
   return (
     <Fragment>
       <Heading
+        as="h2"
         size="lg"
         my="2"
         textAlign="center"
@@ -16,6 +17,7 @@ export default function SubTitle(_: SubTitleProps): JSX.Element {
         オンラインで
       </Heading>
       <Heading
+        as="h2"
         size="lg"
         my="2"
         textAlign="center"

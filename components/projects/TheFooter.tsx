@@ -15,15 +15,13 @@ export default function TheFooter(): JSX.Element {
       gap="4"
     >
       <Text color="white">
-        Created by{" "}
         <Link color="teal.200" href="https://github.com/Nag729" isExternal>
-          @Nag729
-        </Link>{" "}
-        😎
+          @Nag729 😎
+        </Link>
       </Text>
       <Text color="white">|</Text>
       <NextLink href="/about" passHref>
-        <Link color="teal.200">Janken Pon について</Link>
+        <Link color="teal.200">Janken Pon! について</Link>
       </NextLink>
     </Flex>
   );
