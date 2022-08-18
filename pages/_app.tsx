@@ -54,7 +54,7 @@ function App({ Component, pageProps }: AppProps) {
               url: "https://janken-pon.vercel.app/",
               images: [
                 {
-                  url: "http://drive.google.com/uc?export=view&id=1ivHWDSgdSLC0f2WiI_EMYGics8mstERh",
+                  url: "https://janken-pon-public.s3.ap-northeast-1.amazonaws.com/janken-pon.png",
                   width: 1200,
                   height: 630,
                   alt: "janken_pon",
