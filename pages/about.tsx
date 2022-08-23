@@ -76,7 +76,12 @@ export default function About() {
       {/* About Tech */}
       <Flex flexDirection="column" alignItems="center">
         {createHeader(`技術要素`)}
-        {createText(`そのうち Qiita に解説記事を投稿したい :D`)}
+        <Text mt="2" fontSize="xl" color="gray.700">
+          {createExternalLink({
+            text: `Qiita に解説記事を投稿しました！`,
+            href: `https://qiita.com/Nag729/items/12d7099417850b6965ed`,
+          })}
+        </Text>
         <List mt="8" spacing={4}>
           <ListItem fontSize="lg">
             <ListIcon as={CheckCircleIcon} color="teal.500" />
