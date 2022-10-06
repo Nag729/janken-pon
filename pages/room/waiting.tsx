@@ -22,8 +22,10 @@ import {
 } from "../../helpers/rps-room/rps-room.helper";
 import { sleep } from "../../helpers/sleep.helper";
 import {
+  isUserNameEmpty,
   isUserNameTooLong,
   USER_NAME_DUPLICATE_TOAST_OPTIONS,
+  USER_NAME_EMPTY_TOAST_OPTIONS,
   USER_NAME_TOO_LONG_TOAST_OPTIONS,
 } from "../../helpers/user-name/user-name.helper";
 
@@ -92,6 +94,12 @@ const WaitingRoom = () => {
    * Functions
    */
   const joinRoom = async () => {
+    if (isUserNameEmpty(userName)) {
+      toast(USER_NAME_EMPTY_TOAST_OPTIONS);
+      setUserName(``);
+      return;
+    }
+
     if (isUserNameTooLong(userName)) {
       toast(USER_NAME_TOO_LONG_TOAST_OPTIONS);
       return;

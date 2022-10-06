@@ -1,7 +1,17 @@
 import { UseToastOptions } from "@chakra-ui/react";
 
+export const isUserNameEmpty = (userName: string): boolean => {
+  return !userName.trim();
+};
+
 export const isUserNameTooLong = (userName: string): boolean => {
   return userName.length > 10;
+};
+
+export const USER_NAME_EMPTY_TOAST_OPTIONS: UseToastOptions = {
+  title: `名前を正しく入力してください 🥲`,
+  status: `error`,
+  duration: 2000,
 };
 
 export const USER_NAME_TOO_LONG_TOAST_OPTIONS: UseToastOptions = {

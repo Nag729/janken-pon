@@ -8,7 +8,9 @@ import MainTitle from "../components/views/welcome/MainTitle";
 import SubTitle from "../components/views/welcome/SubTitle";
 import { GlobalContext } from "../context/globalContext";
 import {
+  isUserNameEmpty,
   isUserNameTooLong,
+  USER_NAME_EMPTY_TOAST_OPTIONS,
   USER_NAME_TOO_LONG_TOAST_OPTIONS,
 } from "../helpers/user-name/user-name.helper";
 
@@ -35,6 +37,12 @@ export default function Home() {
    * Functions
    */
   const createNewRoom = async () => {
+    if (isUserNameEmpty(userName)) {
+      toast(USER_NAME_EMPTY_TOAST_OPTIONS);
+      setUserName(``);
+      return;
+    }
+
     if (isUserNameTooLong(userName)) {
       toast(USER_NAME_TOO_LONG_TOAST_OPTIONS);
       return;
